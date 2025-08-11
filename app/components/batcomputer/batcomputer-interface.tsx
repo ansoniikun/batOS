@@ -206,11 +206,9 @@ export function BatcomputerInterface({ currentTime }: BatcomputerInterfaceProps)
 
       {/* Main Content Area */}
       <div className="absolute left-20 right-0 top-16 bottom-16 z-10">
-        {/* Central Batman Logo */}
+        {/* Central Area - Empty for terminal placement */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-          <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center border-2 border-blue-400/30 backdrop-blur-sm">
-            <div className="text-white text-6xl font-bold">🦇</div>
-          </div>
+          {/* Terminal will be placed here */}
         </div>
 
         {/* Top Left - Map */}

@@ -11,6 +11,7 @@ import { StartMenu } from '@/app/components/start-menu/start-menu'
 import { NotepadApp } from '@/app/features/apps/notepad-app'
 import { SystemInfoApp } from '@/app/features/apps/system-info-app'
 import { BatcomputerInterface } from '@/app/components/batcomputer/batcomputer-interface'
+import { BatcomputerTerminal } from '@/app/components/terminal/batcomputer-terminal'
 
 interface DesktopProps {
   className?: string
@@ -37,6 +38,13 @@ export function Desktop({ className }: DesktopProps) {
 
   const [currentTime, setCurrentTime] = useState(new Date())
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false)
+  const [terminalState, setTerminalState] = useState({
+    isOpen: true,
+    position: { x: 200, y: 150 },
+    size: { width: 700, height: 500 },
+    isMaximized: false,
+    isFocused: true
+  })
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -224,6 +232,21 @@ export function Desktop({ className }: DesktopProps) {
           onClose={() => setIsStartMenuOpen(false)}
           onAppLaunch={openWindow}
         />
+
+        {/* Terminal */}
+        {terminalState.isOpen && (
+          <BatcomputerTerminal
+            position={terminalState.position}
+            size={terminalState.size}
+            isMaximized={terminalState.isMaximized}
+            isFocused={terminalState.isFocused}
+            onClose={() => setTerminalState(prev => ({ ...prev, isOpen: false }))}
+            onMinimize={() => setTerminalState(prev => ({ ...prev, isOpen: false }))}
+            onMaximize={() => setTerminalState(prev => ({ ...prev, isMaximized: !prev.isMaximized }))}
+            onMove={(position) => setTerminalState(prev => ({ ...prev, position }))}
+            onResize={(size) => setTerminalState(prev => ({ ...prev, size }))}
+          />
+        )}
       </div>
     </div>
   )
