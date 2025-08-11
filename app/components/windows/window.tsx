@@ -98,7 +98,7 @@ export function WindowComponent({
     }
 
     if (isDragging || isResizing) {
-      document.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mousemove', handleMouseMove, { passive: true })
       document.addEventListener('mouseup', handleMouseUp)
     }
 

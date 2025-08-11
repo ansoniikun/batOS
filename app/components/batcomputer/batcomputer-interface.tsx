@@ -22,9 +22,10 @@ import {
 
 interface BatcomputerInterfaceProps {
   currentTime: Date
+  onSystemMenuToggle?: () => void
 }
 
-export function BatcomputerInterface({ currentTime }: BatcomputerInterfaceProps) {
+export function BatcomputerInterface({ currentTime, onSystemMenuToggle }: BatcomputerInterfaceProps) {
   const [systemInfo, setSystemInfo] = useState({
     cpu: 60,
     ram: 3.0,
@@ -106,6 +107,16 @@ export function BatcomputerInterface({ currentTime }: BatcomputerInterfaceProps)
               <span className="font-mono">High {systemInfo.battery}% Battery</span>
             </div>
             <div className="text-xs">RAM</div>
+          </div>
+
+          {/* Right - Batman Logo */}
+          <div className="flex items-center space-x-4">
+            <div 
+              className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-300 transition-colors shadow-lg shadow-blue-400/50"
+              onClick={onSystemMenuToggle}
+            >
+              <span className="text-black text-lg font-bold">🦇</span>
+            </div>
           </div>
 
           {/* Center - Time and Search */}

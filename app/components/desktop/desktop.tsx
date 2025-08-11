@@ -12,6 +12,8 @@ import { NotepadApp } from '@/app/features/apps/notepad-app'
 import { SystemInfoApp } from '@/app/features/apps/system-info-app'
 import { BatcomputerInterface } from '@/app/components/batcomputer/batcomputer-interface'
 import { BatcomputerTerminal } from '@/app/components/terminal/batcomputer-terminal'
+import { FileManager } from '@/app/components/file-manager/file-manager'
+import { SystemMenu } from '@/app/components/system-menu/system-menu'
 
 interface DesktopProps {
   className?: string
@@ -44,6 +46,18 @@ export function Desktop({ className }: DesktopProps) {
     size: { width: 700, height: 500 },
     isMaximized: false,
     isFocused: true
+  })
+
+  const [fileManagerState, setFileManagerState] = useState({
+    isOpen: false,
+    position: { x: 300, y: 200 },
+    size: { width: 800, height: 600 },
+    isMaximized: false,
+    isFocused: false
+  })
+
+  const [systemMenuState, setSystemMenuState] = useState({
+    isOpen: false
   })
 
   useEffect(() => {
@@ -164,13 +178,52 @@ export function Desktop({ className }: DesktopProps) {
     }))
   }
 
+  const handleSystemMenuToggle = () => {
+    setSystemMenuState(prev => ({ ...prev, isOpen: !prev.isOpen }))
+  }
+
+  const handleSystemMenuClose = () => {
+    setSystemMenuState(prev => ({ ...prev, isOpen: false }))
+  }
+
+  const handleLaunchApp = (appId: string) => {
+    switch (appId) {
+      case 'terminal':
+        setTerminalState(prev => ({ ...prev, isOpen: true, isFocused: true }))
+        break
+      case 'file-manager':
+        setFileManagerState(prev => ({ ...prev, isOpen: true, isFocused: true }))
+        break
+      case 'system-info':
+        openWindow({ 
+          id: 'system-info', 
+          name: 'System Info', 
+          icon: 'monitor', 
+          description: 'System monitoring and diagnostics',
+          category: 'system',
+          executable: () => <SystemInfoApp /> 
+        })
+        break
+      case 'settings':
+        openWindow({ 
+          id: 'settings', 
+          name: 'Settings', 
+          icon: 'settings', 
+          description: 'System preferences and configuration',
+          category: 'system',
+          executable: () => <div>Settings App</div> 
+        })
+        break
+    }
+  }
+
   return (
     <div className={cn(
       "relative w-full h-screen overflow-hidden",
       className
     )}>
       {/* Batcomputer Interface */}
-      <BatcomputerInterface currentTime={currentTime} />
+      <BatcomputerInterface currentTime={currentTime} onSystemMenuToggle={handleSystemMenuToggle} />
       
       {/* Desktop Content */}
       <div className="relative z-10 w-full h-full">
@@ -247,6 +300,37 @@ export function Desktop({ className }: DesktopProps) {
             onResize={(size) => setTerminalState(prev => ({ ...prev, size }))}
           />
         )}
+
+        {/* File Manager */}
+        {fileManagerState.isOpen && (
+          <FileManager
+            position={fileManagerState.position}
+            size={fileManagerState.size}
+            isMaximized={fileManagerState.isMaximized}
+            isFocused={fileManagerState.isFocused}
+            onClose={() => setFileManagerState(prev => ({ ...prev, isOpen: false }))}
+            onMinimize={() => setFileManagerState(prev => ({ ...prev, isOpen: false }))}
+            onMaximize={() => setFileManagerState(prev => ({ ...prev, isMaximized: !prev.isMaximized }))}
+            onMove={(position) => setFileManagerState(prev => ({ ...prev, position }))}
+            onResize={(size) => setFileManagerState(prev => ({ ...prev, size }))}
+          />
+        )}
+
+        {/* System Menu */}
+        <SystemMenu
+          isOpen={systemMenuState.isOpen}
+          onClose={handleSystemMenuClose}
+          onLaunchApp={handleLaunchApp}
+          systemInfo={{
+            os: 'BatOS',
+            version: '978.0.06.51',
+            cpu: 'WayneTech Quantum Core',
+            memory: '64GB RAM',
+            storage: '2TB SSD',
+            uptime: '47 days, 12 hours',
+            battery: 87
+          }}
+                />
       </div>
     </div>
   )

@@ -342,13 +342,13 @@ export function BatcomputerTerminal({
         className={cn(
           "flex items-center justify-between h-8 px-2",
           "bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold text-sm",
-          "cursor-move select-none shadow-lg shadow-blue-400/30"
+          "cursor-move select-none shadow-lg shadow-blue-400/50"
         )}
         onMouseDown={handleTitleBarMouseDown}
       >
         <div className="flex items-center space-x-2">
           <GripVertical className="w-4 h-4" />
-          <span className="truncate">Batcomputer Terminal - Dark Knight</span>
+          <span className="truncate">Terminal</span>
         </div>
         
         <div className="flex items-center space-x-1">
@@ -387,7 +387,7 @@ export function BatcomputerTerminal({
       <div className="flex-1 p-3 h-full overflow-hidden" onClick={handleTerminalClick}>
         <div className="h-full flex flex-col">
           {/* Output Area */}
-          <div className="flex-1 overflow-y-auto font-mono text-sm text-blue-400/90 mb-2">
+          <div className="flex-1 overflow-y-auto font-mono text-sm text-blue-400/90">
             {commandHistory.map((entry, index) => (
               <div key={index} className="mb-2">
                 <div className="flex items-center space-x-2">
@@ -404,32 +404,32 @@ export function BatcomputerTerminal({
                 ))}
               </div>
             ))}
-          </div>
-
-          {/* Input Area */}
-          <form onSubmit={handleSubmit} className="flex items-center space-x-2">
-            <span className="text-blue-400/50">darkknight@batcomputer</span>
-            <span className="text-blue-400/50">:</span>
-            <span className="text-blue-400">{currentDirectory}</span>
-            <span className="text-blue-400/50">$</span>
-            <div className="flex-1 flex items-center min-w-0">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="flex-1 bg-transparent text-blue-400 font-mono text-sm outline-none border-none min-w-0"
-                placeholder="Enter command..."
-                autoFocus
-                spellCheck={false}
-                autoComplete="off"
-              />
-              {isFocused && (
-                <span className="text-blue-400 animate-pulse">|</span>
-              )}
+            
+            {/* Current Input Line */}
+            <div className="flex items-center space-x-2">
+              <span className="text-blue-400/50">darkknight@batcomputer</span>
+              <span className="text-blue-400/50">:</span>
+              <span className="text-blue-400">{currentDirectory}</span>
+              <span className="text-blue-400/50">$</span>
+              <div className="flex-1 flex items-center min-w-0">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="flex-1 bg-transparent text-blue-400 font-mono text-sm outline-none border-none min-w-0"
+                  placeholder=""
+                  autoFocus
+                  spellCheck={false}
+                  autoComplete="off"
+                />
+                {isFocused && (
+                  <span className="text-blue-400 animate-pulse">|</span>
+                )}
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
 

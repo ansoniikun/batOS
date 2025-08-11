@@ -13,7 +13,15 @@ export function WidgetManager({ widgets, onWidgetUpdate }: WidgetManagerProps) {
   const renderWidget = (widget: Widget) => {
     switch (widget.type) {
       case 'clock':
-        return <ClockWidget widget={widget} />
+        return <ClockWidget 
+          widget={widget} 
+          onMove={(position) => {
+            const updatedWidgets = widgets.map(w => 
+              w.id === widget.id ? { ...w, position } : w
+            )
+            onWidgetUpdate(updatedWidgets)
+          }}
+        />
       case 'weather':
         return <div className="bg-black/50 text-blue-400 p-4 rounded border border-blue-400/30">
           <div className="text-sm font-mono">Weather Widget</div>
