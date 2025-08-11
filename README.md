@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BatOS - Batcomputer Desktop Environment
+
+A modern web-based desktop environment inspired by the Batcomputer from Batman comics and movies. Built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- **Modern Desktop Environment**: Full-featured desktop with windows, taskbar, and start menu
+- **Batcomputer Theme**: Dark theme with yellow accents inspired by the Batcomputer
+- **Draggable & Resizable Windows**: Windows can be moved and resized
+- **Taskbar**: Shows running applications with minimize/maximize functionality
+- **Start Menu**: Search and launch applications
+- **Widgets**: Desktop widgets (clock, system info, etc.)
+- **Notification System**: Toast notifications for system events
+- **Sample Applications**: Notepad and System Info apps included
+
+## Project Structure
+
+```
+app/
+├── components/
+│   ├── ui/                 # Reusable UI components
+│   ├── desktop/           # Main desktop component
+│   ├── windows/           # Window management
+│   ├── taskbar/           # Taskbar component
+│   ├── start-menu/        # Start menu component
+│   ├── widgets/           # Desktop widgets
+│   └── notifications/     # Notification system
+├── features/
+│   └── apps/             # Desktop applications
+├── lib/                  # Utility functions
+├── types/                # TypeScript type definitions
+└── styles/               # Global styles
+```
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Start Menu**: Click the "Start" button in the taskbar to open the start menu
+- **Launch Apps**: Use the start menu to launch Notepad or System Info
+- **Window Management**: 
+  - Drag windows by their title bar
+  - Resize windows using the bottom-right corner
+  - Minimize, maximize, or close windows using the title bar buttons
+- **Taskbar**: Click taskbar items to focus or restore minimized windows
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15**: React framework with App Router
+- **TypeScript**: Type-safe JavaScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **Radix UI**: Accessible UI primitives
+- **Lucide React**: Icon library
+- **Framer Motion**: Animation library
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Customization
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Adding New Apps
 
-## Deploy on Vercel
+1. Create a new app component in `app/features/apps/`
+2. Add the app to the `sampleApps` array in `app/components/start-menu/start-menu.tsx`
+3. Update the `openWindow` function in `app/components/desktop/desktop.tsx` to handle the new app
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Theming
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The Batcomputer theme uses:
+- **Background**: Dark gradients with yellow accents
+- **Primary Color**: Yellow (#fbbf24)
+- **Text**: Yellow for highlights, white/gray for content
+- **Borders**: Yellow with transparency
+
+## Development
+
+This project uses:
+- **ESLint**: Code linting
+- **TypeScript**: Type checking
+- **Tailwind CSS**: Styling
+- **Next.js**: Development server and build tools
+
+## License
+
+MIT License - feel free to use this project for your own Batcomputer-inspired applications!
