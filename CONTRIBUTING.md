@@ -232,7 +232,7 @@ Contributors will be recognized in:
 
 ## License
 
-By contributing to BATOS, you agree that your contributions will be licensed under the MIT License.
+By contributing to BATOS, you agree that your contributions will be licensed under the AGPL License.
 
 ---
 
