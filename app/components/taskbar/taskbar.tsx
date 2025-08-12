@@ -20,23 +20,38 @@ interface TaskbarProps {
   items: TaskbarItem[]
   onItemClick: (item: TaskbarItem) => void
   onStartMenuClick: () => void
+  onSystemMenuToggle?: () => void
   currentTime: Date
 }
 
-export function Taskbar({ items, onItemClick, onStartMenuClick, currentTime }: TaskbarProps) {
+export function Taskbar({ items, onItemClick, onStartMenuClick, onSystemMenuToggle, currentTime }: TaskbarProps) {
   return (
     <div className="fixed top-0 left-0 right-0 h-12 bg-black/80 backdrop-blur-md border-b border-blue-400/30 z-50">
       <div className="flex items-center justify-between h-full px-2">
-        {/* Start Button */}
-        <Button
-          variant="batcomputer"
-          size="sm"
-          onClick={onStartMenuClick}
-          className="h-8 px-3 rounded-none shadow-lg shadow-blue-400/50"
-        >
-          <Play className="w-4 h-4 mr-1" />
-          Start
-        </Button>
+        {/* Batman Logo */}
+        <div className="flex items-center space-x-2">
+          <div 
+            className="cursor-pointer transition-all duration-200 hover:scale-110"
+            onClick={onSystemMenuToggle}
+          >
+            <img 
+              src="/batman-logo.png" 
+              alt="Batman Logo" 
+              className="w-8 h-8 object-contain filter drop-shadow-lg drop-shadow-blue-400/80"
+            />
+          </div>
+          
+          {/* Start Button */}
+          <Button
+            variant="batcomputer"
+            size="sm"
+            onClick={onStartMenuClick}
+            className="h-8 px-3 rounded-none shadow-lg shadow-blue-400/50"
+          >
+            <Play className="w-4 h-4 mr-1" />
+            Start
+          </Button>
+        </div>
 
         {/* Taskbar Items */}
         <div className="flex items-center space-x-1 flex-1 justify-center">

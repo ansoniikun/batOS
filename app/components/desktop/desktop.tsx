@@ -30,8 +30,57 @@ export function Desktop({ className }: DesktopProps) {
         id: 'clock-widget',
         name: 'Clock',
         type: 'clock',
-        position: { x: 20, y: 20 },
-        size: { width: 200, height: 100 }
+        position: { x: 20, y: 100 },
+        size: { width: 200, height: 120 }
+      },
+      {
+        id: 'calendar-widget',
+        name: 'Calendar',
+        type: 'calendar',
+        position: { x: 240, y: 100 },
+        size: { width: 200, height: 150 }
+      },
+      {
+        id: 'cpu-widget',
+        name: 'CPU Usage',
+        type: 'cpu',
+        position: { x: 460, y: 100 },
+        size: { width: 200, height: 150 }
+      },
+      {
+        id: 'user-stats-widget',
+        name: 'User Stats',
+        type: 'user-stats',
+        position: { x: 680, y: 100 },
+        size: { width: 200, height: 180 }
+      },
+      {
+        id: 'bruce-wayne-widget',
+        name: 'Bruce Wayne Profile',
+        type: 'bruce-wayne',
+        position: { x: 900, y: 100 },
+        size: { width: 200, height: 200 }
+      },
+      {
+        id: 'console-widget',
+        name: 'System Console',
+        type: 'console',
+        position: { x: 20, y: 300 },
+        size: { width: 300, height: 250 }
+      },
+      {
+        id: 'map-widget',
+        name: 'Surveillance Map',
+        type: 'map',
+        position: { x: 340, y: 300 },
+        size: { width: 280, height: 200 }
+      },
+      {
+        id: 'weather-widget',
+        name: 'Weather & System',
+        type: 'weather',
+        position: { x: 640, y: 300 },
+        size: { width: 280, height: 150 }
       }
     ],
     theme: 'batcomputer',
@@ -41,11 +90,11 @@ export function Desktop({ className }: DesktopProps) {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false)
   const [terminalState, setTerminalState] = useState({
-    isOpen: true,
+    isOpen: false,
     position: { x: 200, y: 150 },
     size: { width: 700, height: 500 },
     isMaximized: false,
-    isFocused: true
+    isFocused: false
   })
 
   const [fileManagerState, setFileManagerState] = useState({
@@ -59,6 +108,29 @@ export function Desktop({ className }: DesktopProps) {
   const [systemMenuState, setSystemMenuState] = useState({
     isOpen: false
   })
+
+  const [widgetVisibility, setWidgetVisibility] = useState<Record<string, boolean>>({
+    'clock-widget': false,
+    'calendar-widget': false,
+    'cpu-widget': false,
+    'user-stats-widget': false,
+    'bruce-wayne-widget': false,
+    'console-widget': false,
+    'map-widget': false,
+    'weather-widget': false
+  })
+
+  const [contextMenu, setContextMenu] = useState<{
+    isOpen: boolean
+    x: number
+    y: number
+  }>({
+    isOpen: false,
+    x: 0,
+    y: 0
+  })
+
+  const [globalZIndex, setGlobalZIndex] = useState(1000)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -123,17 +195,29 @@ export function Desktop({ className }: DesktopProps) {
   }
 
   const focusWindow = (windowId: string) => {
+    setGlobalZIndex(prev => prev + 1)
     setDesktopState(prev => ({
       ...prev,
       windows: prev.windows.map(w => ({
         ...w,
         isFocused: w.id === windowId,
-        zIndex: w.id === windowId ? Math.max(...prev.windows.map(w => w.zIndex), 0) + 1 : w.zIndex
+        zIndex: w.id === windowId ? globalZIndex + 1 : w.zIndex
       })),
       activeWindowId: windowId,
       taskbarItems: prev.taskbarItems.map(t => ({
         ...t,
         isActive: t.id === windowId
+      }))
+    }))
+  }
+
+  const bringWindowToFront = (windowId: string) => {
+    setGlobalZIndex(prev => prev + 1)
+    setDesktopState(prev => ({
+      ...prev,
+      windows: prev.windows.map(w => ({
+        ...w,
+        zIndex: w.id === windowId ? globalZIndex + 1 : w.zIndex
       }))
     }))
   }
@@ -179,7 +263,21 @@ export function Desktop({ className }: DesktopProps) {
   }
 
   const handleSystemMenuToggle = () => {
+    // Close start menu if open
+    if (isStartMenuOpen) {
+      setIsStartMenuOpen(false)
+    }
+    // Toggle system menu
     setSystemMenuState(prev => ({ ...prev, isOpen: !prev.isOpen }))
+  }
+
+  const handleStartMenuToggle = () => {
+    // Close system menu if open
+    if (systemMenuState.isOpen) {
+      setSystemMenuState(prev => ({ ...prev, isOpen: false }))
+    }
+    // Toggle start menu
+    setIsStartMenuOpen(prev => !prev)
   }
 
   const handleSystemMenuClose = () => {
@@ -217,19 +315,60 @@ export function Desktop({ className }: DesktopProps) {
     }
   }
 
+  const handleStartMenuAppLaunch = (app: DesktopApp) => {
+    // Handle special apps that don't use the window system
+    if (app.id === 'terminal') {
+      setTerminalState(prev => ({ ...prev, isOpen: true, isFocused: true }))
+    } else if (app.id === 'file-manager') {
+      setFileManagerState(prev => ({ ...prev, isOpen: true, isFocused: true }))
+    } else {
+      // Use the window system for other apps
+      openWindow(app)
+    }
+  }
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setContextMenu({
+      isOpen: true,
+      x: e.clientX,
+      y: e.clientY
+    })
+  }
+
+  const handleContextMenuClose = () => {
+    setContextMenu(prev => ({ ...prev, isOpen: false }))
+  }
+
+  const toggleWidget = (widgetId: string) => {
+    setWidgetVisibility(prev => ({
+      ...prev,
+      [widgetId]: !prev[widgetId]
+    }))
+    handleContextMenuClose()
+  }
+
   return (
-    <div className={cn(
-      "relative w-full h-screen overflow-hidden",
-      className
-    )}>
+    <div 
+      className={cn(
+        "relative w-full h-screen overflow-hidden",
+        className
+      )}
+      onContextMenu={handleContextMenu}
+      onClick={handleContextMenuClose}
+    >
       {/* Batcomputer Interface */}
-      <BatcomputerInterface currentTime={currentTime} onSystemMenuToggle={handleSystemMenuToggle} />
+      <BatcomputerInterface 
+        currentTime={currentTime} 
+        onSystemMenuToggle={handleSystemMenuToggle}
+        onStartMenuClick={handleStartMenuToggle}
+      />
       
       {/* Desktop Content */}
       <div className="relative z-10 w-full h-full">
         {/* Widgets Layer */}
         <WidgetManager 
-          widgets={desktopState.widgets}
+          widgets={desktopState.widgets.filter(widget => widgetVisibility[widget.id])}
           onWidgetUpdate={(widgets: any) => setDesktopState(prev => ({ ...prev, widgets }))}
         />
 
@@ -242,6 +381,7 @@ export function Desktop({ className }: DesktopProps) {
           onWindowMaximize={maximizeWindow}
           onWindowMove={updateWindowPosition}
           onWindowResize={updateWindowSize}
+          onWindowClick={bringWindowToFront}
         />
 
         {/* Taskbar */}
@@ -262,9 +402,8 @@ export function Desktop({ className }: DesktopProps) {
             }
             item.onClick()
           }}
-          onStartMenuClick={() => {
-            setIsStartMenuOpen(true)
-          }}
+          onStartMenuClick={handleStartMenuToggle}
+          onSystemMenuToggle={handleSystemMenuToggle}
           currentTime={currentTime}
         />
 
@@ -283,7 +422,7 @@ export function Desktop({ className }: DesktopProps) {
         <StartMenu
           isOpen={isStartMenuOpen}
           onClose={() => setIsStartMenuOpen(false)}
-          onAppLaunch={openWindow}
+          onAppLaunch={handleStartMenuAppLaunch}
         />
 
         {/* Terminal */}
@@ -298,6 +437,10 @@ export function Desktop({ className }: DesktopProps) {
             onMaximize={() => setTerminalState(prev => ({ ...prev, isMaximized: !prev.isMaximized }))}
             onMove={(position) => setTerminalState(prev => ({ ...prev, position }))}
             onResize={(size) => setTerminalState(prev => ({ ...prev, size }))}
+            onFocus={() => {
+              setGlobalZIndex(prev => prev + 1)
+              setTerminalState(prev => ({ ...prev, isFocused: true }))
+            }}
           />
         )}
 
@@ -313,6 +456,10 @@ export function Desktop({ className }: DesktopProps) {
             onMaximize={() => setFileManagerState(prev => ({ ...prev, isMaximized: !prev.isMaximized }))}
             onMove={(position) => setFileManagerState(prev => ({ ...prev, position }))}
             onResize={(size) => setFileManagerState(prev => ({ ...prev, size }))}
+            onFocus={() => {
+              setGlobalZIndex(prev => prev + 1)
+              setFileManagerState(prev => ({ ...prev, isFocused: true }))
+            }}
           />
         )}
 
@@ -331,6 +478,34 @@ export function Desktop({ className }: DesktopProps) {
             battery: 87
           }}
                 />
+
+        {/* Context Menu */}
+        {contextMenu.isOpen && (
+          <div 
+            className="fixed z-50 bg-black/95 backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg py-2 min-w-48"
+            style={{ left: contextMenu.x, top: contextMenu.y }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-blue-400 text-sm font-bold px-4 py-2 border-b border-blue-400/30">
+              Add Widgets
+            </div>
+            {Object.entries(widgetVisibility).map(([widgetId, isVisible]) => {
+              const widget = desktopState.widgets.find(w => w.id === widgetId)
+              return (
+                <button
+                  key={widgetId}
+                  onClick={() => toggleWidget(widgetId)}
+                  className="w-full text-left px-4 py-2 text-blue-400 hover:bg-blue-400/10 transition-colors flex items-center justify-between"
+                >
+                  <span>{widget?.name || widgetId}</span>
+                  <span className="text-blue-400/70 text-xs">
+                    {isVisible ? 'Hide' : 'Show'}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

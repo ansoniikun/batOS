@@ -11,6 +11,7 @@ interface TerminalProps {
   onMaximize?: () => void
   onMove?: (position: { x: number; y: number }) => void
   onResize?: (size: { width: number; height: number }) => void
+  onFocus?: () => void
   isFocused?: boolean
   position?: { x: number; y: number }
   size?: { width: number; height: number }
@@ -29,6 +30,7 @@ export function BatcomputerTerminal({
   onMaximize,
   onMove,
   onResize,
+  onFocus,
   isFocused = false,
   position = { x: 100, y: 100 },
   size = { width: 600, height: 400 },
@@ -155,6 +157,14 @@ export function BatcomputerTerminal({
       '1235 darkknight  20   0  102400   8500   4250 S   8.2   0.3   0:00.45 surveillance',
       '1236 darkknight  20   0   51200   4250   2125 S   4.1   0.1   0:00.23 gps_tracking'
     ],
+    'exit': () => {
+      onClose?.()
+      return ['Terminal closed.']
+    },
+    'quit': () => {
+      onClose?.()
+      return ['Terminal closed.']
+    },
     'df': () => [
       'Filesystem     1K-blocks    Used Available Use% Mounted on',
       '/dev/batcave   104857600  8500000  96357600   9% /batcave',
@@ -252,6 +262,7 @@ export function BatcomputerTerminal({
         y: e.clientY - rect.top
       })
     }
+    onFocus?.()
     e.preventDefault()
   }
 
@@ -334,7 +345,7 @@ export function BatcomputerTerminal({
         top: position.y,
         width: isMaximized ? 'calc(100vw - 80px)' : size.width,
         height: isMaximized ? 'calc(100vh - 128px)' : size.height,
-        zIndex: isFocused ? 1000 : 100
+        zIndex: isFocused ? 2000 : 100
       }}
     >
       {/* Title Bar */}

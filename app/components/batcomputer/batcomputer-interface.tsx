@@ -23,9 +23,10 @@ import {
 interface BatcomputerInterfaceProps {
   currentTime: Date
   onSystemMenuToggle?: () => void
+  onStartMenuClick?: () => void
 }
 
-export function BatcomputerInterface({ currentTime, onSystemMenuToggle }: BatcomputerInterfaceProps) {
+export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartMenuClick }: BatcomputerInterfaceProps) {
   const [systemInfo, setSystemInfo] = useState({
     cpu: 60,
     ram: 3.0,
@@ -39,6 +40,60 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle }: Batcom
     lanAddress: '192.168.1.1',
     dnsAddress: '8.8.8.8'
   })
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<Array<{
+    name: string
+    path: string
+    type: 'file' | 'folder'
+    icon: string
+  }>>([])
+  const [showSearchResults, setShowSearchResults] = useState(false)
+
+  // Filesystem data for search
+  const filesystemData = [
+    { name: 'batmobile', path: '/batcave/batmobile', type: 'folder' as const, icon: '🚗' },
+    { name: 'batwing', path: '/batcave/batwing', type: 'folder' as const, icon: '✈️' },
+    { name: 'batarangs', path: '/batcave/batarangs', type: 'folder' as const, icon: '🥷' },
+    { name: 'gadgets', path: '/batcave/gadgets', type: 'folder' as const, icon: '🛠️' },
+    { name: 'surveillance', path: '/batcave/surveillance', type: 'folder' as const, icon: '📹' },
+    { name: 'evidence', path: '/batcave/evidence', type: 'folder' as const, icon: '🔍' },
+    { name: 'case_files', path: '/batcave/case_files', type: 'folder' as const, icon: '📁' },
+    { name: 'wayne_tech', path: '/batcave/wayne_tech', type: 'folder' as const, icon: '🏢' },
+    { name: 'gotham_map', path: '/batcave/gotham_map', type: 'folder' as const, icon: '🗺️' },
+    { name: 'criminal_database', path: '/batcave/criminal_database', type: 'folder' as const, icon: '👥' },
+    { name: 'status.txt', path: '/batcave/batmobile/status.txt', type: 'file' as const, icon: '📄' },
+    { name: 'specs.txt', path: '/batcave/batmobile/specs.txt', type: 'file' as const, icon: '📄' },
+    { name: 'maintenance.log', path: '/batcave/batmobile/maintenance.log', type: 'file' as const, icon: '📄' },
+    { name: 'active_targets.txt', path: '/batcave/surveillance/active_targets.txt', type: 'file' as const, icon: '📄' },
+    { name: 'joker_case.txt', path: '/batcave/case_files/joker_case.txt', type: 'file' as const, icon: '📄' },
+    { name: 'penguin_case.txt', path: '/batcave/case_files/penguin_case.txt', type: 'file' as const, icon: '📄' },
+    { name: 'riddler_case.txt', path: '/batcave/case_files/riddler_case.txt', type: 'file' as const, icon: '📄' }
+  ]
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    if (query.trim() === '') {
+      setSearchResults([])
+      setShowSearchResults(false)
+      return
+    }
+
+    const results = filesystemData.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase()) ||
+      item.path.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, 8) // Limit to 8 results
+
+    setSearchResults(results)
+    setShowSearchResults(results.length > 0)
+  }
+
+  const handleSearchResultClick = (result: typeof filesystemData[0]) => {
+    console.log(`Opening: ${result.path}`)
+    setSearchQuery('')
+    setShowSearchResults(false)
+    // Here you could add logic to open the file/folder
+  }
 
   const [consoleOutput, setConsoleOutput] = useState([
     'Batcomputer v.978.0.06.51...',
@@ -97,7 +152,16 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle }: Batcom
           {/* Left - System Info */}
           <div className="flex items-center space-x-6 text-blue-400 text-sm">
             <div className="flex items-center space-x-2">
-              <span className="font-mono font-bold">BCv.978</span>
+              <div 
+                className="cursor-pointer transition-all duration-200 hover:scale-110"
+                onClick={onStartMenuClick}
+              >
+                <img 
+                  src="/batman-logo.png" 
+                  alt="Batman Logo" 
+                  className="w-8 h-8 object-contain filter drop-shadow-lg drop-shadow-blue-400/80"
+                />
+              </div>
               <div className="w-8 h-8 border-2 border-blue-400 rounded-full flex items-center justify-center">
                 <span className="text-xs font-mono">{systemInfo.ram.toFixed(1)}G</span>
               </div>
@@ -109,248 +173,89 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle }: Batcom
             <div className="text-xs">RAM</div>
           </div>
 
-          {/* Right - Batman Logo */}
-          <div className="flex items-center space-x-4">
-            <div 
-              className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-300 transition-colors shadow-lg shadow-blue-400/50"
-              onClick={onSystemMenuToggle}
-            >
-              <span className="text-black text-lg font-bold">🦇</span>
-            </div>
-          </div>
-
-          {/* Center - Time and Search */}
+          {/* Center - Search */}
           <div className="flex items-center space-x-6">
-            <div className="text-blue-400 font-mono">
-              <div className="text-sm">Galactic Standard Time</div>
-              <div className="text-lg font-bold">
-                {currentTime.toLocaleTimeString('en-US', { 
-                  hour12: false, 
-                  hour: '2-digit', 
-                  minute: '2-digit' 
-                })}
-              </div>
-            </div>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-blue-400/70" />
               <input
                 type="text"
-                placeholder="Google"
-                className="pl-10 pr-4 py-2 bg-gray-800/50 border border-blue-400/30 rounded text-blue-400 placeholder-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 w-48"
+                placeholder="Search filesystem..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={() => setShowSearchResults(searchResults.length > 0)}
+                onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
+                className="pl-10 pr-4 py-2 bg-gray-800/50 border border-blue-400/30 rounded text-blue-400 placeholder-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 w-64"
               />
+              
+              {/* Search Results Dropdown */}
+              {showSearchResults && searchResults.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-black/95 backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg max-h-64 overflow-y-auto z-50">
+                  {searchResults.map((result, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSearchResultClick(result)}
+                      className="w-full p-3 flex items-center space-x-3 hover:bg-blue-400/10 transition-colors border-b border-blue-400/10 last:border-b-0"
+                    >
+                      <span className="text-lg">{result.icon}</span>
+                      <div className="flex-1 text-left">
+                        <div className="text-blue-400 font-medium">{result.name}</div>
+                        <div className="text-blue-400/70 text-sm">{result.path}</div>
+                      </div>
+                      <span className="text-blue-400/50 text-xs">
+                        {result.type === 'folder' ? '📁' : '📄'}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Right - Metrics */}
+          {/* Right - System Controls and Info */}
           <div className="flex items-center space-x-6 text-blue-400 text-sm">
-            <div className="text-center">
-              <div className="font-mono font-bold">{systemInfo.networkSpeed}</div>
-              <div className="text-xs">REB COLORS</div>
+            {/* System Icons */}
+            <div className="flex items-center space-x-4">
+              <Volume2 className="w-4 h-4" />
+              <Wifi className="w-4 h-4" />
+              <Settings className="w-4 h-4" />
             </div>
-            <div className="text-center">
-              <div className="font-mono">Average {systemInfo.temperature}% CPU</div>
-              <div className="text-xs">11 km/h</div>
+
+            {/* Storage Info */}
+            <div className="flex items-center space-x-4 font-mono">
+              <div>D:/ 0.0 Used</div>
+              <div>C:/ 719.9 G Used</div>
             </div>
+
+            {/* Data Visualization */}
             <div className="flex items-center space-x-2">
-              <Activity className="w-4 h-4" />
-              <div className="w-16 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-400 rounded-full" style={{ width: `${systemInfo.cpu}%` }} />
+              <div className="w-24 h-3 bg-gray-700 rounded-full overflow-hidden">
+                <div className="h-full bg-blue-400 rounded-full animate-pulse" style={{ width: '60%' }} />
               </div>
             </div>
+
+            {/* Date and Time */}
+            <div className="font-mono">
+              {currentTime.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+              })} {currentTime.toLocaleDateString('en-US', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric' 
+              })}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Left Sidebar */}
-      <div className="absolute left-0 top-16 bottom-16 w-20 bg-black/80 backdrop-blur-sm border-r border-blue-400/30 z-20">
-        <div className="flex flex-col items-center space-y-6 py-6">
-          {/* Wayne Tech Assets */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center border border-blue-400/30">
-              <span className="text-blue-400 text-xs font-bold">WT</span>
-            </div>
-            <div className="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center border border-blue-400/30">
-              <span className="text-blue-400 text-xs font-bold">BW</span>
-            </div>
-            <div className="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center border border-blue-400/30">
-              <span className="text-blue-400 text-xs font-bold">BC</span>
-            </div>
-            <div className="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center border border-blue-400/30">
-              <span className="text-blue-400 text-xs font-bold">BM</span>
-            </div>
-            <div className="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center border border-blue-400/30">
-              <span className="text-blue-400 text-xs font-bold">BW</span>
-            </div>
-          </div>
 
-          {/* Social Media */}
-          <div className="flex flex-col items-center space-y-3">
-            <div className="w-8 h-8 bg-blue-400/20 rounded-full flex items-center justify-center">
-              <span className="text-blue-400 text-xs">T</span>
-            </div>
-            <div className="w-8 h-8 bg-blue-400/20 rounded-full flex items-center justify-center">
-              <span className="text-blue-400 text-xs">F</span>
-            </div>
-            <div className="w-8 h-8 bg-blue-400/20 rounded-full flex items-center justify-center">
-              <span className="text-blue-400 text-xs">S</span>
-            </div>
-            <div className="w-8 h-8 bg-blue-400/20 rounded-full flex items-center justify-center">
-              <span className="text-blue-400 text-xs">G+</span>
-            </div>
-          </div>
-
-          {/* Adventure Status */}
-          <div className="text-center">
-            <div className="text-blue-400 text-xs font-bold">Adventure Begins</div>
-            <div className="text-blue-400/70 text-xs">11/55</div>
-            <div className="w-6 h-6 bg-blue-400/20 rounded-full flex items-center justify-center mt-2">
-              <span className="text-blue-400 text-xs">⚡</span>
-            </div>
-          </div>
-
-          {/* U TECH Logo */}
-          <div className="text-center mt-auto">
-            <div className="text-blue-400 text-xs font-bold">U TECH</div>
-          </div>
-        </div>
-      </div>
 
       {/* Main Content Area */}
-      <div className="absolute left-20 right-0 top-16 bottom-16 z-10">
+      <div className="absolute left-0 right-0 top-16 bottom-0 z-10">
         {/* Central Area - Empty for terminal placement */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
           {/* Terminal will be placed here */}
-        </div>
-
-        {/* Top Left - Map */}
-        <div className="absolute top-4 left-4 w-64 h-48 bg-black/80 backdrop-blur-sm border border-blue-400/30 rounded">
-          <div className="p-3">
-            <div className="text-blue-400 text-sm font-bold mb-2">Europe Surveillance</div>
-            <div className="w-full h-32 bg-blue-400/10 rounded border border-blue-400/20 flex items-center justify-center">
-              <MapPin className="w-8 h-8 text-blue-400/50" />
-            </div>
-          </div>
-        </div>
-
-        {/* Top Center - Console Output */}
-        <div className="absolute top-4 left-72 right-72 h-48 bg-black/80 backdrop-blur-sm border border-blue-400/30 rounded">
-          <div className="p-3 h-full">
-            <div className="text-blue-400 text-sm font-bold mb-2">System Console</div>
-            <div className="h-36 overflow-y-auto font-mono text-xs text-blue-400/80 space-y-1">
-              {consoleOutput.map((line, index) => (
-                <div key={index} className="flex">
-                  <span className="text-blue-400/50 mr-2">{'>'}</span>
-                  <span>{line}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Right Panel */}
-        <div className="absolute top-4 right-4 w-80 h-96 bg-black/80 backdrop-blur-sm border border-blue-400/30 rounded">
-          <div className="p-3 h-full overflow-y-auto">
-            {/* Calendar */}
-            <div className="mb-4">
-              <div className="text-blue-400 text-sm font-bold mb-2">January 2016</div>
-              <div className="grid grid-cols-7 gap-1 text-xs">
-                {Array.from({ length: 31 }, (_, i) => (
-                  <div key={i} className="w-6 h-6 flex items-center justify-center text-blue-400/70">
-                    {i + 1}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* CPU Gauge */}
-            <div className="mb-4">
-              <div className="text-blue-400 text-sm font-bold mb-2">CPU {systemInfo.cpu}</div>
-              <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-400 rounded-full" style={{ width: `${systemInfo.cpu}%` }} />
-              </div>
-            </div>
-
-            {/* Network Info */}
-            <div className="mb-4 space-y-2">
-              <div className="flex justify-between text-xs text-blue-400">
-                <span>DOWNLOAD {systemInfo.download}</span>
-                <span>UPLOAD {systemInfo.upload}</span>
-              </div>
-            </div>
-
-            {/* Bruce Wayne Profile */}
-            <div className="mb-4 p-2 bg-blue-400/10 rounded border border-blue-400/20">
-              <div className="text-blue-400 text-sm font-bold mb-2">Bruce Wayne</div>
-              <div className="grid grid-cols-2 gap-1 text-xs text-blue-400/80">
-                <div>Age: 35</div>
-                <div>Gender: Male</div>
-                <div>Height: 6'2"</div>
-                <div>Eye Color: Blue</div>
-                <div>Hair Color: Black</div>
-              </div>
-            </div>
-
-            {/* System Metrics */}
-            <div className="space-y-2 text-xs text-blue-400/80">
-              <div>CPU Temp: {systemInfo.temperature}°C</div>
-              <div>GPU Temp: 42°C</div>
-              <div>HDD Temp: 38°C</div>
-              <div>LAN IP: {systemInfo.ipAddress}</div>
-              <div>Network: {systemInfo.lanAddress}</div>
-              <div>DNS: {systemInfo.dnsAddress}</div>
-              <div>Uptime: {systemInfo.uptime}</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Left - Weather/System */}
-        <div className="absolute bottom-4 left-4 w-64 h-32 bg-black/80 backdrop-blur-sm border border-blue-400/30 rounded">
-          <div className="p-3">
-            <div className="text-blue-400 text-sm font-bold mb-2">Weather & System</div>
-            <div className="space-y-1 text-xs text-blue-400/80">
-              <div>7°C Partly Cloudy</div>
-              <div>Feels Like: 5°C</div>
-              <div>Core Active Since: {systemInfo.uptime}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="absolute bottom-0 left-20 right-0 h-16 bg-black/80 backdrop-blur-sm border-t border-blue-400/30 z-20">
-        <div className="flex items-center justify-between h-full px-6">
-          {/* System Icons */}
-          <div className="flex items-center space-x-4 text-blue-400">
-            <Volume2 className="w-4 h-4" />
-            <Wifi className="w-4 h-4" />
-            <Settings className="w-4 h-4" />
-          </div>
-
-          {/* Storage Info */}
-          <div className="flex items-center space-x-6 text-blue-400 text-sm">
-            <div className="font-mono">D:/ 0.0 Used</div>
-            <div className="font-mono">C:/ 719.9 G Used</div>
-          </div>
-
-          {/* Data Visualization */}
-          <div className="flex items-center space-x-2">
-            <div className="w-32 h-4 bg-gray-700 rounded-full overflow-hidden">
-              <div className="h-full bg-blue-400 rounded-full animate-pulse" style={{ width: '60%' }} />
-            </div>
-          </div>
-
-          {/* Date and Time */}
-          <div className="text-blue-400 font-mono text-sm">
-            {currentTime.toLocaleTimeString('en-US', { 
-              hour12: false, 
-              hour: '2-digit', 
-              minute: '2-digit' 
-            })} {currentTime.toLocaleDateString('en-US', { 
-              day: '2-digit', 
-              month: '2-digit', 
-              year: 'numeric' 
-            })}
-          </div>
         </div>
       </div>
     </div>

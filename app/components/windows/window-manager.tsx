@@ -12,6 +12,7 @@ interface WindowManagerProps {
   onWindowMaximize: (windowId: string) => void
   onWindowMove: (windowId: string, position: { x: number; y: number }) => void
   onWindowResize: (windowId: string, size: { width: number; height: number }) => void
+  onWindowClick?: (windowId: string) => void
 }
 
 export function WindowManager({
@@ -21,7 +22,8 @@ export function WindowManager({
   onWindowMinimize,
   onWindowMaximize,
   onWindowMove,
-  onWindowResize
+  onWindowResize,
+  onWindowClick
 }: WindowManagerProps) {
   return (
     <div className="absolute inset-0 pointer-events-none">
@@ -38,6 +40,7 @@ export function WindowManager({
             onMaximize={() => onWindowMaximize(window.id)}
             onMove={(position) => onWindowMove(window.id, position)}
             onResize={(size) => onWindowResize(window.id, size)}
+            onClick={() => onWindowClick?.(window.id)}
           />
         ))}
     </div>

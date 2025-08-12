@@ -20,6 +20,7 @@ interface WindowComponentProps {
   onMaximize: () => void
   onMove: (position: { x: number; y: number }) => void
   onResize: (size: { width: number; height: number }) => void
+  onClick?: () => void
 }
 
 export function WindowComponent({
@@ -29,7 +30,8 @@ export function WindowComponent({
   onMinimize,
   onMaximize,
   onMove,
-  onResize
+  onResize,
+  onClick
 }: WindowComponentProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
@@ -40,6 +42,7 @@ export function WindowComponent({
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onFocus()
+      onClick?.()
     }
   }
 

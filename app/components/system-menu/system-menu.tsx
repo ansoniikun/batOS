@@ -48,13 +48,17 @@ export function SystemMenu({ isOpen, onClose, onLaunchApp, systemInfo }: SystemM
   ]
 
   return (
-    <div className="fixed inset-0 z-50" onClick={onClose}>
+    <div className="fixed inset-0 z-60" onClick={onClose}>
       <div className="absolute top-16 right-4 w-96 bg-black/95 backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg">
         {/* Header */}
         <div className="p-4 border-b border-blue-400/30">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center">
-              <span className="text-black text-2xl font-bold">🦇</span>
+            <div className="flex items-center justify-center">
+              <img 
+                src="/batman-logo.png" 
+                alt="Batman Logo" 
+                className="w-12 h-12 object-contain filter drop-shadow-lg drop-shadow-blue-400/80"
+              />
             </div>
             <div>
               <div className="text-blue-400 font-bold text-lg">BatOS</div>

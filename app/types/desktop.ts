@@ -52,7 +52,7 @@ export interface Notification {
 export interface Widget {
   id: string
   name: string
-  type: 'clock' | 'weather' | 'system' | 'custom'
+  type: 'clock' | 'calendar' | 'cpu' | 'user-stats' | 'bruce-wayne' | 'console' | 'map' | 'weather' | 'system' | 'custom'
   position: { x: number; y: number }
   size: { width: number; height: number }
   config?: Record<string, any>

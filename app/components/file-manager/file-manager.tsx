@@ -34,6 +34,7 @@ interface FileManagerProps {
   onMaximize?: () => void
   onMove?: (position: { x: number; y: number }) => void
   onResize?: (size: { width: number; height: number }) => void
+  onFocus?: () => void
   isFocused?: boolean
   position?: { x: number; y: number }
   size?: { width: number; height: number }
@@ -55,6 +56,7 @@ export function FileManager({
   onMaximize,
   onMove,
   onResize,
+  onFocus,
   isFocused = false,
   position = { x: 100, y: 100 },
   size = { width: 800, height: 600 },
@@ -159,6 +161,7 @@ export function FileManager({
         y: e.clientY - rect.top
       })
     }
+    onFocus?.()
     e.preventDefault()
   }
 
@@ -222,7 +225,7 @@ export function FileManager({
         top: position.y,
         width: isMaximized ? 'calc(100vw - 80px)' : size.width,
         height: isMaximized ? 'calc(100vh - 128px)' : size.height,
-        zIndex: isFocused ? 1000 : 100
+        zIndex: isFocused ? 2000 : 100
       }}
     >
       {/* Title Bar */}
