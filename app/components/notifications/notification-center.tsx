@@ -4,6 +4,7 @@ import React from 'react'
 import { cn } from '@/app/lib/utils'
 import { Notification } from '@/app/types/desktop'
 import { Button } from '@/app/components/ui/button'
+import { useTheme } from '@/app/contexts/theme-context'
 import { X, Info, CheckCircle, AlertTriangle, AlertCircle } from 'lucide-react'
 
 interface NotificationCenterProps {
@@ -12,6 +13,7 @@ interface NotificationCenterProps {
 }
 
 export function NotificationCenter({ notifications, onNotificationDismiss }: NotificationCenterProps) {
+  const { getThemeClass } = useTheme()
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
       case 'success':
@@ -44,7 +46,7 @@ export function NotificationCenter({ notifications, onNotificationDismiss }: Not
         <div
           key={notification.id}
           className={cn(
-            "bg-black/80 backdrop-blur-sm text-white p-4 rounded-lg border shadow-lg",
+            `${getThemeClass()} backdrop-blur-sm text-white p-4 rounded-lg border shadow-lg`,
             "max-w-sm pointer-events-auto",
             "animate-in slide-in-from-right-2 duration-300",
             getNotificationBorderColor(notification.type)

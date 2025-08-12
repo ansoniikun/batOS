@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { cn } from '@/app/lib/utils'
+import { useTheme } from '@/app/contexts/theme-context'
 import { 
   Cpu, 
   HardDrive, 
@@ -27,6 +28,7 @@ interface BatcomputerInterfaceProps {
 }
 
 export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartMenuClick }: BatcomputerInterfaceProps) {
+  const { getThemeClass } = useTheme()
   const [systemInfo, setSystemInfo] = useState({
     cpu: 60,
     ram: 3.0,
@@ -40,6 +42,21 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartM
     lanAddress: '192.168.1.1',
     dnsAddress: '8.8.8.8'
   })
+
+  // Dynamic RAM monitoring
+  useEffect(() => {
+    const updateSystemInfo = () => {
+      setSystemInfo(prev => ({
+        ...prev,
+        ram: Math.random() * 2 + 2.5, // Random RAM usage between 2.5-4.5GB
+        battery: 100, // Keep battery at 100%
+        cpu: Math.max(10, Math.min(90, prev.cpu + (Math.random() - 0.5) * 10)) // CPU fluctuations
+      }))
+    }
+
+    const interval = setInterval(updateSystemInfo, 3000) // Update every 3 seconds
+    return () => clearInterval(interval)
+  }, [])
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<{
@@ -147,7 +164,7 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartM
       </div>
 
       {/* Top Bar */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-black/80 backdrop-blur-sm border-b border-blue-400/30 z-20">
+              <div className={`absolute top-0 left-0 right-0 h-16 ${getThemeClass()} backdrop-blur-sm border-b border-blue-400/30 z-20`}>
         <div className="flex items-center justify-between h-full px-6">
           {/* Left - System Info */}
           <div className="flex items-center space-x-6 text-blue-400 text-sm">
@@ -162,13 +179,13 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartM
                   className="w-8 h-8 object-contain filter drop-shadow-lg drop-shadow-blue-400/80"
                 />
               </div>
-              <div className="w-8 h-8 border-2 border-blue-400 rounded-full flex items-center justify-center">
-                <span className="text-xs font-mono">{systemInfo.ram.toFixed(1)}G</span>
-              </div>
+                          <div className="w-8 h-8 border-2 border-blue-400 rounded-full flex items-center justify-center">
+              <span className="text-xs font-mono">{systemInfo.ram.toFixed(1)}</span>
+            </div>
             </div>
             <div className="flex items-center space-x-2">
               <Battery className="w-4 h-4" />
-              <span className="font-mono">High {systemInfo.battery}% Battery</span>
+              <span className="font-mono">{systemInfo.battery}%</span>
             </div>
             <div className="text-xs">RAM</div>
           </div>
@@ -189,7 +206,14 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartM
               
               {/* Search Results Dropdown */}
               {showSearchResults && searchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-black/95 backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg max-h-64 overflow-y-auto z-50">
+                <div 
+                  className={`absolute top-full left-0 right-0 mt-1 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg max-h-64 overflow-y-auto z-50`}
+                  style={{ 
+                    scrollbarWidth: 'thin', 
+                    scrollbarColor: '#3b82f6 #000000',
+                    scrollbarGutter: 'stable'
+                  }}
+                >
                   {searchResults.map((result, index) => (
                     <button
                       key={index}
@@ -215,15 +239,13 @@ export function BatcomputerInterface({ currentTime, onSystemMenuToggle, onStartM
           <div className="flex items-center space-x-6 text-blue-400 text-sm">
             {/* System Icons */}
             <div className="flex items-center space-x-4">
-              <Volume2 className="w-4 h-4" />
               <Wifi className="w-4 h-4" />
               <Settings className="w-4 h-4" />
             </div>
 
             {/* Storage Info */}
             <div className="flex items-center space-x-4 font-mono">
-              <div>D:/ 0.0 Used</div>
-              <div>C:/ 719.9 G Used</div>
+              <div>719.9G Used</div>
             </div>
 
             {/* Data Visualization */}

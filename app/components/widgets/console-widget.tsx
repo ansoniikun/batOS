@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Widget } from '@/app/types/desktop'
 import { Terminal, GripVertical, Activity } from 'lucide-react'
+import { useTheme } from '@/app/contexts/theme-context'
 
 interface ConsoleWidgetProps {
   widget: Widget
@@ -10,6 +11,7 @@ interface ConsoleWidgetProps {
 }
 
 export function ConsoleWidget({ widget, onMove }: ConsoleWidgetProps) {
+  const { getThemeClass } = useTheme()
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const widgetRef = useRef<HTMLDivElement>(null)
@@ -85,14 +87,10 @@ export function ConsoleWidget({ widget, onMove }: ConsoleWidgetProps) {
   return (
     <div 
       ref={widgetRef}
-      className="bg-black/80 backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move"
+      className={`${getThemeClass()} backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move`}
       onMouseDown={handleMouseDown}
     >
-      <div className="flex items-center justify-center space-x-2 mb-3">
-        <GripVertical className="w-4 h-4 text-blue-400/70" />
-        <Terminal className="w-4 h-4 text-blue-400" />
-        <span className="text-xs text-blue-400/70">DRAG</span>
-      </div>
+
       
       <div className="h-48 overflow-hidden">
         <div className="text-blue-400 text-sm font-bold mb-2 flex items-center space-x-2">
@@ -100,7 +98,14 @@ export function ConsoleWidget({ widget, onMove }: ConsoleWidgetProps) {
           <span>System Console</span>
         </div>
         
-        <div className="h-36 overflow-y-auto font-mono text-xs text-blue-400/80 space-y-1 bg-black/50 rounded p-2">
+        <div 
+          className="h-36 overflow-y-auto font-mono text-xs text-blue-400/80 space-y-1 bg-black/50 rounded p-2"
+          style={{ 
+            scrollbarWidth: 'thin', 
+            scrollbarColor: '#3b82f6 #000000',
+            scrollbarGutter: 'stable'
+          }}
+        >
           {consoleOutput.map((line, index) => (
             <div key={index} className="flex">
               <span className="text-blue-400/50 mr-2">{'>'}</span>

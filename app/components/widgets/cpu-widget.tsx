@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Widget } from '@/app/types/desktop'
 import { Activity, GripVertical, Cpu } from 'lucide-react'
+import { useTheme } from '@/app/contexts/theme-context'
 
 interface CpuWidgetProps {
   widget: Widget
@@ -10,6 +11,7 @@ interface CpuWidgetProps {
 }
 
 export function CpuWidget({ widget, onMove }: CpuWidgetProps) {
+  const { getThemeClass } = useTheme()
   const [cpuUsage, setCpuUsage] = useState(60)
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
@@ -66,14 +68,10 @@ export function CpuWidget({ widget, onMove }: CpuWidgetProps) {
   return (
     <div 
       ref={widgetRef}
-      className="bg-black/80 backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move"
+      className={`${getThemeClass()} backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move`}
       onMouseDown={handleMouseDown}
     >
-      <div className="flex items-center justify-center space-x-2 mb-3">
-        <GripVertical className="w-4 h-4 text-blue-400/70" />
-        <Cpu className="w-4 h-4 text-blue-400" />
-        <span className="text-xs text-blue-400/70">DRAG</span>
-      </div>
+
       
       <div className="text-center">
         <div className="text-blue-400 font-mono mb-3">

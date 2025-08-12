@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { cn } from '@/app/lib/utils'
 import { Button } from '@/app/components/ui/button'
+import { useTheme } from '@/app/contexts/theme-context'
 import { 
   Info, 
   Terminal, 
@@ -36,6 +37,7 @@ interface SystemMenuProps {
 }
 
 export function SystemMenu({ isOpen, onClose, onLaunchApp, systemInfo }: SystemMenuProps) {
+  const { getThemeClass } = useTheme()
   const [activeTab, setActiveTab] = useState<'about' | 'apps'>('about')
 
   if (!isOpen) return null
@@ -49,7 +51,7 @@ export function SystemMenu({ isOpen, onClose, onLaunchApp, systemInfo }: SystemM
 
   return (
     <div className="fixed inset-0 z-60" onClick={onClose}>
-      <div className="absolute top-16 right-4 w-96 bg-black/95 backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg">
+      <div className={`absolute top-16 right-4 w-96 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg`}>
         {/* Header */}
         <div className="p-4 border-b border-blue-400/30">
           <div className="flex items-center space-x-3">
@@ -94,7 +96,14 @@ export function SystemMenu({ isOpen, onClose, onLaunchApp, systemInfo }: SystemM
         </div>
 
         {/* Content */}
-        <div className="p-4 max-h-96 overflow-y-auto">
+                    <div 
+              className="p-4 max-h-96 overflow-y-auto"
+              style={{ 
+                scrollbarWidth: 'thin', 
+                scrollbarColor: '#3b82f6 #000000',
+                scrollbarGutter: 'stable'
+              }}
+            >
           {activeTab === 'about' ? (
             <div className="space-y-4">
               {/* System Overview */}

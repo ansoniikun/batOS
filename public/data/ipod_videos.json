@@ -1,0 +1,136 @@
+{
+  "videos": [
+    {
+      "id": "1",
+      "title": "Smells Like Teen Spirit",
+      "artist": "Nirvana",
+      "duration": "5:01",
+      "thumbnail": "https://img.youtube.com/vi/hTWKbfoikeg/maxresdefault.jpg",
+      "videoId": "hTWKbfoikeg",
+      "genre": "Grunge",
+      "year": 1991,
+      "album": "Nevermind"
+    },
+    {
+      "id": "2",
+      "title": "Come As You Are",
+      "artist": "Nirvana",
+      "duration": "3:39",
+      "thumbnail": "https://img.youtube.com/vi/vabnZ9-ex7o/maxresdefault.jpg",
+      "videoId": "vabnZ9-ex7o",
+      "genre": "Grunge",
+      "year": 1991,
+      "album": "Nevermind"
+    },
+    {
+      "id": "3",
+      "title": "Lithium",
+      "artist": "Nirvana",
+      "duration": "4:17",
+      "thumbnail": "https://img.youtube.com/vi/pkcJEvMcnEg/maxresdefault.jpg",
+      "videoId": "pkcJEvMcnEg",
+      "genre": "Grunge",
+      "year": 1991,
+      "album": "Nevermind"
+    },
+    {
+      "id": "4",
+      "title": "In Bloom",
+      "artist": "Nirvana",
+      "duration": "4:14",
+      "thumbnail": "https://img.youtube.com/vi/PbgKEjNBHqM/maxresdefault.jpg",
+      "videoId": "PbgKEjNBHqM",
+      "genre": "Grunge",
+      "year": 1991,
+      "album": "Nevermind"
+    },
+    {
+      "id": "5",
+      "title": "Heart-Shaped Box",
+      "artist": "Nirvana",
+      "duration": "4:41",
+      "thumbnail": "https://img.youtube.com/vi/n6P0SitRwy8/maxresdefault.jpg",
+      "videoId": "n6P0SitRwy8",
+      "genre": "Grunge",
+      "year": 1993,
+      "album": "In Utero"
+    },
+    {
+      "id": "6",
+      "title": "Do I Wanna Know?",
+      "artist": "Arctic Monkeys",
+      "duration": "4:32",
+      "thumbnail": "https://img.youtube.com/vi/bpOSxM0rNPM/maxresdefault.jpg",
+      "videoId": "bpOSxM0rNPM",
+      "genre": "Indie Rock",
+      "year": 2013,
+      "album": "AM"
+    },
+    {
+      "id": "7",
+      "title": "R U Mine?",
+      "artist": "Arctic Monkeys",
+      "duration": "3:21",
+      "thumbnail": "https://img.youtube.com/vi/ngzC_8zqInk/maxresdefault.jpg",
+      "videoId": "ngzC_8zqInk",
+      "genre": "Indie Rock",
+      "year": 2012,
+      "album": "AM"
+    },
+    {
+      "id": "8",
+      "title": "Why'd You Only Call Me When You're High?",
+      "artist": "Arctic Monkeys",
+      "duration": "2:41",
+      "thumbnail": "https://img.youtube.com/vi/bpOSxM0rNPM/maxresdefault.jpg",
+      "videoId": "bpOSxM0rNPM",
+      "genre": "Indie Rock",
+      "year": 2013,
+      "album": "AM"
+    },
+    {
+      "id": "9",
+      "title": "Arabella",
+      "artist": "Arctic Monkeys",
+      "duration": "3:27",
+      "thumbnail": "https://img.youtube.com/vi/Jn6-TItCazo/maxresdefault.jpg",
+      "videoId": "Jn6-TItCazo",
+      "genre": "Indie Rock",
+      "year": 2013,
+      "album": "AM"
+    },
+    {
+      "id": "10",
+      "title": "Snap Out Of It",
+      "artist": "Arctic Monkeys",
+      "duration": "3:13",
+      "thumbnail": "https://img.youtube.com/vi/ngzC_8zqInk/maxresdefault.jpg",
+      "videoId": "ngzC_8zqInk",
+      "genre": "Indie Rock",
+      "year": 2013,
+      "album": "AM"
+    },
+    {
+      "id": "11",
+      "title": "Something in the Way",
+      "artist": "Nirvana",
+      "duration": "3:52",
+      "thumbnail": "https://img.youtube.com/vi/4VxdufqB9zg/maxresdefault.jpg",
+      "videoId": "4VxdufqB9zg",
+      "genre": "Grunge",
+      "year": 1991,
+      "album": "Nevermind"
+    },
+    {
+      "id": "12",
+      "title": "Batman",
+      "artist": "Jaden Smith",
+      "duration": "3:42",
+      "thumbnail": "https://img.youtube.com/vi/0LYzDB4hWUs/maxresdefault.jpg",
+      "videoId": "0LYzDB4hWUs",
+      "genre": "Hip Hop",
+      "year": 2017,
+      "album": "SYRE"
+    }
+  ]
+}

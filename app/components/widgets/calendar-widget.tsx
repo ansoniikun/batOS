@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Widget } from '@/app/types/desktop'
 import { Calendar, GripVertical, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTheme } from '@/app/contexts/theme-context'
 
 interface CalendarWidgetProps {
   widget: Widget
@@ -10,6 +11,7 @@ interface CalendarWidgetProps {
 }
 
 export function CalendarWidget({ widget, onMove }: CalendarWidgetProps) {
+  const { getThemeClass } = useTheme()
   const [currentDate, setCurrentDate] = useState(new Date())
   const [displayDate, setDisplayDate] = useState(new Date())
   const [isDragging, setIsDragging] = useState(false)
@@ -117,14 +119,12 @@ export function CalendarWidget({ widget, onMove }: CalendarWidgetProps) {
   return (
     <div 
       ref={widgetRef}
-      className="bg-black/90 backdrop-blur-sm border border-blue-400/50 rounded-lg p-3 shadow-lg shadow-blue-400/20 cursor-move"
+      className={`${getThemeClass()} backdrop-blur-sm border border-blue-400/50 rounded-lg p-3 shadow-lg shadow-blue-400/20 cursor-move`}
       onMouseDown={handleMouseDown}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center space-x-2">
-          <GripVertical className="w-3 h-3 text-blue-400/70" />
           <Calendar className="w-4 h-4 text-blue-400" />
-          <span className="text-xs text-blue-400/70">DRAG</span>
         </div>
         
         <div className="flex items-center space-x-1">

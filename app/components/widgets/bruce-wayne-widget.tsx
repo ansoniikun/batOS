@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react'
 import { Widget } from '@/app/types/desktop'
 import { User, GripVertical, Shield, Eye, Ruler } from 'lucide-react'
+import { useTheme } from '@/app/contexts/theme-context'
 
 interface BruceWayneWidgetProps {
   widget: Widget
@@ -10,6 +11,7 @@ interface BruceWayneWidgetProps {
 }
 
 export function BruceWayneWidget({ widget, onMove }: BruceWayneWidgetProps) {
+  const { getThemeClass } = useTheme()
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const widgetRef = useRef<HTMLDivElement>(null)
@@ -53,14 +55,10 @@ export function BruceWayneWidget({ widget, onMove }: BruceWayneWidgetProps) {
   return (
     <div 
       ref={widgetRef}
-      className="bg-black/80 backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move"
+      className={`${getThemeClass()} backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move`}
       onMouseDown={handleMouseDown}
     >
-      <div className="flex items-center justify-center space-x-2 mb-3">
-        <GripVertical className="w-4 h-4 text-blue-400/70" />
-        <User className="w-4 h-4 text-blue-400" />
-        <span className="text-xs text-blue-400/70">DRAG</span>
-      </div>
+
       
       <div className="p-3 bg-blue-400/10 rounded border border-blue-400/20">
         <div className="text-blue-400 text-sm font-bold mb-3 flex items-center space-x-2">

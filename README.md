@@ -1,94 +1,183 @@
-# BatOS - Batcomputer Desktop Environment
+# 🦇 BATOS - Batcomputer Operating System
 
-A modern web-based desktop environment inspired by the Batcomputer from Batman comics and movies. Built with Next.js, TypeScript, and Tailwind CSS.
+A modern web-based desktop environment inspired by the Batcomputer, built with Next.js, TypeScript, and Tailwind CSS.
 
-## Features
+## 🚀 Features
 
-- **Modern Desktop Environment**: Full-featured desktop with windows, taskbar, and start menu
-- **Batcomputer Theme**: Dark theme with yellow accents inspired by the Batcomputer
-- **Draggable & Resizable Windows**: Windows can be moved and resized
-- **Taskbar**: Shows running applications with minimize/maximize functionality
-- **Start Menu**: Search and launch applications
-- **Widgets**: Desktop widgets (clock, system info, etc.)
-- **Notification System**: Toast notifications for system events
-- **Sample Applications**: Notepad and System Info apps included
+### 🖥️ Desktop Environment
+- **Modern UI**: Glowing blue theme with Batman-inspired aesthetics
+- **Window Management**: Draggable, resizable, minimizable, and maximizable windows
+- **Smooth Interactions**: 60fps dragging with requestAnimationFrame optimization
+- **Theme System**: Switch between 'liquid' (black) and 'frost' (gray) themes
+- **Z-Index Management**: Proper layering for windows, widgets, and UI elements
 
-## Project Structure
+### 🎯 Applications
+- **Terminal**: Linux-like command interface with custom commands
+- **File Manager**: Browse and manage files with drag-and-drop
+- **Batplayer**: Music player with YouTube integration (Nirvana, Arctic Monkeys, Jaden Smith)
+- **Notepad**: Simple text editor
+- **System Info**: Real-time system monitoring
 
-```
-app/
-├── components/
-│   ├── ui/                 # Reusable UI components
-│   ├── desktop/           # Main desktop component
-│   ├── windows/           # Window management
-│   ├── taskbar/           # Taskbar component
-│   ├── start-menu/        # Start menu component
-│   ├── widgets/           # Desktop widgets
-│   └── notifications/     # Notification system
-├── features/
-│   └── apps/             # Desktop applications
-├── lib/                  # Utility functions
-├── types/                # TypeScript type definitions
-└── styles/               # Global styles
-```
+### 📊 Widgets
+- **Clock Widget**: Real-time clock with date display
+- **Calendar Widget**: Interactive calendar
+- **CPU Widget**: System performance monitoring
+- **User Stats Widget**: User information display
+- **Alert System**: Real-time disaster and crime monitoring
+  - NASA EONET API integration
+  - USGS Earthquake data
+  - NOAA Weather alerts
+  - Crime news monitoring
 
-## Getting Started
+### 🎵 Media Player
+- **YouTube Integration**: Real-time music streaming
+- **Playlist Management**: 12-track playlist including:
+  - Nirvana classics (Smells Like Teen Spirit, Something in the Way, etc.)
+  - Arctic Monkeys hits (Do I Wanna Know?, R U Mine?, etc.)
+  - Jaden Smith's "Batman"
+- **Audio Controls**: Play, pause, seek, volume control
+- **Focus Management**: Maintains playback when switching windows
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+### 🔧 System Features
+- **Start Menu**: Application launcher with search functionality
+- **Taskbar**: Window management and system controls
+- **Context Menus**: Right-click desktop interactions
+- **Global Volume Control**: System-wide audio management
+- **Real-time APIs**: Live data from multiple sources
 
-2. Run the development server:
-   ```bash
-   npm run dev
-   ```
+## 🛠️ Technology Stack
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
+### Core
+- **Next.js 15.4.6**: React framework with App Router
+- **React 19.1.0**: Latest React with concurrent features
+- **TypeScript 5**: Type-safe development
+- **Tailwind CSS 4**: Utility-first styling
 
-## Usage
-
-- **Start Menu**: Click the "Start" button in the taskbar to open the start menu
-- **Launch Apps**: Use the start menu to launch Notepad or System Info
-- **Window Management**: 
-  - Drag windows by their title bar
-  - Resize windows using the bottom-right corner
-  - Minimize, maximize, or close windows using the title bar buttons
-- **Taskbar**: Click taskbar items to focus or restore minimized windows
-
-## Technologies Used
-
-- **Next.js 15**: React framework with App Router
-- **TypeScript**: Type-safe JavaScript
-- **Tailwind CSS**: Utility-first CSS framework
-- **Radix UI**: Accessible UI primitives
+### UI Components
+- **Radix UI**: Accessible component primitives
 - **Lucide React**: Icon library
-- **Framer Motion**: Animation library
+- **Framer Motion**: Smooth animations
+- **Class Variance Authority**: Component variant management
 
-## Customization
+### APIs & Data
+- **NASA EONET**: Natural disaster monitoring
+- **USGS**: Earthquake data
+- **NOAA**: Weather alerts
+- **YouTube IFrame API**: Music streaming
 
-### Adding New Apps
+## 🚀 Getting Started
 
-1. Create a new app component in `app/features/apps/`
-2. Add the app to the `sampleApps` array in `app/components/start-menu/start-menu.tsx`
-3. Update the `openWindow` function in `app/components/desktop/desktop.tsx` to handle the new app
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-### Theming
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/batos.git
+cd batos
 
-The Batcomputer theme uses:
-- **Background**: Dark gradients with yellow accents
-- **Primary Color**: Yellow (#fbbf24)
-- **Text**: Yellow for highlights, white/gray for content
-- **Borders**: Yellow with transparency
+# Install dependencies
+npm install
 
-## Development
+# Start development server
+npm run dev
+```
 
-This project uses:
-- **ESLint**: Code linting
-- **TypeScript**: Type checking
-- **Tailwind CSS**: Styling
-- **Next.js**: Development server and build tools
+### Build for Production
+```bash
+npm run build
+npm start
+```
 
-## License
+## 🎮 Usage
 
-MIT License - feel free to use this project for your own Batcomputer-inspired applications!
+### Desktop Navigation
+- **Left-click Batman logo**: Open start menu
+- **Right-click desktop**: Context menu with widgets and themes
+- **Drag windows**: Click and drag title bars
+- **Resize windows**: Drag corners and edges
+- **Minimize/Maximize**: Use window controls
+
+### Applications
+- **Terminal**: Type `help` for available commands
+- **Batplayer**: Click play to start music
+- **File Manager**: Navigate and manage files
+- **Widgets**: Drag to reposition, right-click to remove
+
+### Keyboard Shortcuts
+- **Escape**: Close start menu
+- **Ctrl+Click**: Multi-select in file manager
+
+## 🏗️ Project Structure
+
+```
+batos/
+├── app/
+│   ├── components/
+│   │   ├── desktop/          # Desktop environment
+│   │   ├── windows/          # Window management
+│   │   ├── widgets/          # Desktop widgets
+│   │   ├── start-menu/       # Start menu
+│   │   ├── taskbar/          # Taskbar
+│   │   └── ui/              # Reusable UI components
+│   ├── features/apps/        # Application components
+│   ├── contexts/            # React contexts
+│   ├── types/               # TypeScript definitions
+│   └── lib/                 # Utility functions
+├── public/
+│   └── data/               # JSON data files
+└── package.json
+```
+
+## 🎨 Customization
+
+### Themes
+The system supports two themes:
+- **Liquid**: Dark black background (`bg-black/95`)
+- **Frost**: Gray background (`bg-gray-900/95`)
+
+### Adding Widgets
+1. Create widget component in `app/components/widgets/`
+2. Add to widget manager
+3. Register in desktop state
+4. Add to context menu
+
+### Adding Applications
+1. Create app component in `app/features/apps/`
+2. Add to start menu applications array
+3. Implement required props and methods
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Please read our [Contribution Guidelines](CONTRIBUTING.md) before submitting any changes.
+
+### Before Submitting
+- **Preview Required**: Please include a screenshot or video preview of your changes
+- **Test Thoroughly**: Ensure all features work correctly
+- **Follow Code Style**: Use TypeScript and follow existing patterns
+- **Update Documentation**: Keep README and comments up to date
+
+### Contribution Areas
+- 🎨 UI/UX improvements
+- 🚀 New applications
+- 📊 Additional widgets
+- 🔧 Bug fixes
+- 📚 Documentation updates
+- 🎵 Music playlist additions
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **DC Comics**: For the Batman universe inspiration
+- **NASA**: For the EONET API
+- **USGS**: For earthquake data
+- **NOAA**: For weather alerts
+- **YouTube**: For music streaming capabilities
+
+---
+
+**BATOS** - Because even the Dark Knight needs a modern OS 🦇💻

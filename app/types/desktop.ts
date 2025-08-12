@@ -3,7 +3,7 @@ import React from 'react'
 export interface Window {
   id: string
   title: string
-  type: 'app' | 'widget' | 'system'
+  type: 'app' | 'widget' | 'system' | 'terminal' | 'file-manager'
   position: { x: number; y: number }
   size: { width: number; height: number }
   isMinimized: boolean
@@ -52,7 +52,7 @@ export interface Notification {
 export interface Widget {
   id: string
   name: string
-  type: 'clock' | 'calendar' | 'cpu' | 'user-stats' | 'bruce-wayne' | 'console' | 'map' | 'weather' | 'system' | 'custom'
+  type: 'clock' | 'calendar' | 'cpu' | 'user-stats' | 'bruce-wayne' | 'console' | 'map' | 'weather' | 'alert' | 'system' | 'custom'
   position: { x: number; y: number }
   size: { width: number; height: number }
   config?: Record<string, any>

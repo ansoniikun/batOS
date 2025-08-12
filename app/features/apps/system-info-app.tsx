@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card'
 import { Button } from '@/app/components/ui/button'
+import { useTheme } from '@/app/contexts/theme-context'
 import { 
   Monitor, 
   Cpu, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react'
 
 export function SystemInfoApp() {
+  const { getThemeClass } = useTheme()
   const [systemInfo, setSystemInfo] = useState({
     os: 'BatOS v1.0',
     cpu: 'Intel Core i9-12900K',
@@ -50,7 +52,14 @@ export function SystemInfoApp() {
   }
 
   return (
-    <div className="w-full h-full bg-gray-900 text-blue-400 p-4 overflow-auto">
+    <div 
+      className={`w-full h-full ${getThemeClass()} text-blue-400 p-4 overflow-auto`}
+      style={{ 
+        scrollbarWidth: 'thin', 
+        scrollbarColor: '#3b82f6 #000000',
+        scrollbarGutter: 'stable'
+      }}
+    >
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-blue-400">System Information</h1>
         <Button 

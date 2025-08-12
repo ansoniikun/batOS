@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Widget } from '@/app/types/desktop'
 import { User, GripVertical, Shield, Database } from 'lucide-react'
+import { useTheme } from '@/app/contexts/theme-context'
 
 interface UserStatsWidgetProps {
   widget: Widget
@@ -10,6 +11,7 @@ interface UserStatsWidgetProps {
 }
 
 export function UserStatsWidget({ widget, onMove }: UserStatsWidgetProps) {
+  const { getThemeClass } = useTheme()
   const [userStats, setUserStats] = useState({
     networkSpeed: '1.2 GB/s',
     temperature: 42,
@@ -73,14 +75,10 @@ export function UserStatsWidget({ widget, onMove }: UserStatsWidgetProps) {
   return (
     <div 
       ref={widgetRef}
-      className="bg-black/80 backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move"
+      className={`${getThemeClass()} backdrop-blur-sm border border-blue-400/50 rounded-lg p-4 shadow-lg shadow-blue-400/20 cursor-move`}
       onMouseDown={handleMouseDown}
     >
-      <div className="flex items-center justify-center space-x-2 mb-3">
-        <GripVertical className="w-4 h-4 text-blue-400/70" />
-        <User className="w-4 h-4 text-blue-400" />
-        <span className="text-xs text-blue-400/70">DRAG</span>
-      </div>
+
       
       <div className="space-y-3">
         <div className="text-center">

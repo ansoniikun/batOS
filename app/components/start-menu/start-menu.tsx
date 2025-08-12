@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { cn } from '@/app/lib/utils'
 import { Button } from '@/app/components/ui/button'
 import { DesktopApp } from '@/app/types/desktop'
+import { useTheme } from '@/app/contexts/theme-context'
 import { 
   Play, 
   FileText, 
@@ -14,6 +15,7 @@ import {
   User,
   Terminal,
   Folder,
+  Music,
   Clock,
   Calendar,
   Cpu,
@@ -50,6 +52,16 @@ const applications: DesktopApp[] = [
     executable: () => <div>File Manager App</div>,
     defaultSize: { width: 900, height: 700 },
     defaultPosition: { x: 150, y: 150 }
+  },
+  {
+    id: 'ipod',
+    name: 'Batplayer',
+    icon: 'music',
+    description: 'Retro music player',
+    category: 'entertainment',
+    executable: () => <div>Batplayer App</div>,
+    defaultSize: { width: 240, height: 320 },
+    defaultPosition: { x: 200, y: 200 }
   },
   {
     id: 'notepad',
@@ -90,6 +102,7 @@ const getIconComponent = (iconName: string) => {
     'file-text': <FileText className="w-6 h-6" />,
     'monitor': <Monitor className="w-6 h-6" />,
     'settings': <Settings className="w-6 h-6" />,
+    'music': <Music className="w-6 h-6" />,
     'clock': <Clock className="w-6 h-6" />,
     'calendar': <Calendar className="w-6 h-6" />,
     'cpu': <Cpu className="w-6 h-6" />,
@@ -103,6 +116,7 @@ const getIconComponent = (iconName: string) => {
 }
 
 export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
+  const { getThemeClass } = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState<'apps' | 'recent'>('apps')
 
@@ -119,9 +133,9 @@ export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-60" onClick={onClose}>
+    <div className="fixed inset-0" style={{ zIndex: 9999 }} onClick={onClose}>
       <div 
-        className="absolute top-20 left-0 w-80 bg-black-900/95 backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-b-lg"
+        className={`absolute top-16 left-0 w-80 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-b-lg`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Bar */}
@@ -166,7 +180,14 @@ export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
         </div>
 
         {/* Content */}
-        <div className="max-h-96 overflow-y-auto">
+                    <div 
+              className="max-h-96 overflow-y-auto"
+              style={{ 
+                scrollbarWidth: 'thin', 
+                scrollbarColor: '#3b82f6 #000000',
+                scrollbarGutter: 'stable'
+              }}
+            >
           {activeTab === 'apps' ? (
             <>
               {/* Applications Folder */}
