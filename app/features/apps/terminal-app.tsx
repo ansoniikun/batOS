@@ -137,6 +137,16 @@ export function TerminalApp() {
       '1235 darkknight  20   0  102400   8500   4250 S   8.2   0.3   0:00.45 surveillance',
       '1236 darkknight  20   0   51200   4250   2125 S   4.1   0.1   0:00.23 gps_tracking'
     ],
+    'clear': () => {
+      setCommandHistory([{
+        command: '',
+        output: [
+          '',
+        ],
+        timestamp: new Date()
+      }])
+      return []
+    },
     'exit': () => ['Terminal closed.'],
     'quit': () => ['Terminal closed.'],
     'df': () => [
@@ -168,6 +178,7 @@ export function TerminalApp() {
       '  free             - Show memory usage',
       '  uptime           - Show system uptime',
       '  date             - Show current date/time',
+      '  clear            - Clear terminal screen',
       '  exit, quit       - Close terminal',
       '  help             - Show this help'
     ]
