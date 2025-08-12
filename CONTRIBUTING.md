@@ -1,8 +1,8 @@
-# 🤝 Contributing to BATOS
+# Contributing to BATOS
 
 Thank you for your interest in contributing to BATOS! This document provides guidelines for contributing to the project.
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Fork** the repository
 2. **Clone** your fork locally
@@ -12,7 +12,7 @@ Thank you for your interest in contributing to BATOS! This document provides gui
 6. **Add** preview (screenshot/video)
 7. **Submit** a pull request
 
-## 📋 Contribution Guidelines
+## Contribution Guidelines
 
 ### Before You Start
 
@@ -23,7 +23,7 @@ Thank you for your interest in contributing to BATOS! This document provides gui
 
 ### Required for All Contributions
 
-#### 📸 Preview Requirement
+#### Preview Requirement
 **All contributions must include a visual preview:**
 
 - **Screenshots**: For UI changes, new components, or bug fixes
@@ -43,45 +43,45 @@ Thank you for your interest in contributing to BATOS! This document provides gui
 - **Performance**: No significant performance regressions
 - **Accessibility**: Follow WCAG guidelines where applicable
 
-## 🎯 Contribution Areas
+## Contribution Areas
 
-### 🎨 UI/UX Improvements
+### UI/UX Improvements
 - **Visual enhancements**: Better styling, animations, effects
 - **User experience**: Improved interactions, workflows
 - **Responsive design**: Better mobile/tablet support
 - **Accessibility**: Screen reader support, keyboard navigation
 
-### 🚀 New Applications
+### New Applications
 - **Desktop apps**: New applications for the desktop environment
 - **Integration**: Connect with external APIs or services
 - **Games**: Simple games or interactive experiences
 - **Tools**: Utility applications for productivity
 
-### 📊 Widgets
+### Widgets
 - **Data widgets**: Display real-time information
 - **Interactive widgets**: User-configurable components
 - **System widgets**: Hardware monitoring, system stats
 - **Media widgets**: Music controls, video players
 
-### 🔧 System Features
+### System Features
 - **Window management**: Improved dragging, resizing, snapping
 - **File system**: Enhanced file operations
 - **Settings**: Configuration options and preferences
 - **Performance**: Optimizations and speed improvements
 
-### 🎵 Media & Content
+### Media & Content
 - **Music**: Add tracks to the Batplayer playlist
 - **Themes**: New visual themes or color schemes
 - **Icons**: Custom icons for applications or widgets
 - **Sounds**: System sounds and audio feedback
 
-### 📚 Documentation
+### Documentation
 - **README updates**: Keep documentation current
 - **Code comments**: Improve code documentation
 - **Tutorials**: How-to guides for features
 - **API documentation**: Document new APIs or components
 
-## 🛠️ Development Setup
+## Development Setup
 
 ### Prerequisites
 - Node.js 18+
@@ -115,7 +115,7 @@ npm run build
 - **Line length**: 80 characters max
 - **File naming**: kebab-case for files, PascalCase for components
 
-## 📝 Pull Request Process
+## Pull Request Process
 
 ### 1. Create Your Branch
 ```bash
@@ -163,7 +163,7 @@ None (or describe if any)
 Any additional context or notes
 ```
 
-## 🐛 Bug Reports
+## Bug Reports
 
 ### Before Reporting
 - **Search existing issues**: Check if already reported
@@ -195,7 +195,7 @@ What actually happens
 [If applicable]
 ```
 
-## 💡 Feature Requests
+## Feature Requests
 
 ### Before Requesting
 - **Check existing features**: Make sure it's not already implemented
@@ -217,25 +217,25 @@ How you think it could be implemented
 [If you have any]
 ```
 
-## 🏆 Recognition
+## Recognition
 
 Contributors will be recognized in:
 - **README.md**: Contributors section
 - **Release notes**: For significant contributions
 - **GitHub**: Contributor graph and profile
 
-## 📞 Getting Help
+## Getting Help
 
 - **Issues**: Use GitHub issues for bugs and feature requests
 - **Discussions**: Use GitHub Discussions for questions and ideas
 - **Code review**: Ask for help with code reviews
 
-## 📄 License
+## License
 
 By contributing to BATOS, you agree that your contributions will be licensed under the MIT License.
 
 ---
 
-**Thank you for contributing to BATOS!** 🦇💻
+**Thank you for contributing to BATOS!**
 
 Your contributions help make the Batcomputer even more awesome for the Dark Knight and users worldwide.

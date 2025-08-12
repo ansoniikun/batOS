@@ -1,24 +1,24 @@
-# 🦇 BATOS - Batcomputer Operating System
+# BATOS - Batcomputer Operating System
 
 A modern web-based desktop environment inspired by the Batcomputer, built with Next.js, TypeScript, and Tailwind CSS.
 
-## 🚀 Features
+## Features
 
-### 🖥️ Desktop Environment
+### Desktop Environment
 - **Modern UI**: Glowing blue theme with Batman-inspired aesthetics
 - **Window Management**: Draggable, resizable, minimizable, and maximizable windows
 - **Smooth Interactions**: 60fps dragging with requestAnimationFrame optimization
 - **Theme System**: Switch between 'liquid' (black) and 'frost' (gray) themes
 - **Z-Index Management**: Proper layering for windows, widgets, and UI elements
 
-### 🎯 Applications
+### Applications
 - **Terminal**: Linux-like command interface with custom commands
 - **File Manager**: Browse and manage files with drag-and-drop
 - **Batplayer**: Music player with YouTube integration (Nirvana, Arctic Monkeys, Jaden Smith)
 - **Notepad**: Simple text editor
 - **System Info**: Real-time system monitoring
 
-### 📊 Widgets
+### Widgets
 - **Clock Widget**: Real-time clock with date display
 - **Calendar Widget**: Interactive calendar
 - **CPU Widget**: System performance monitoring
@@ -29,7 +29,7 @@ A modern web-based desktop environment inspired by the Batcomputer, built with N
   - NOAA Weather alerts
   - Crime news monitoring
 
-### 🎵 Media Player
+### Media Player
 - **YouTube Integration**: Real-time music streaming
 - **Playlist Management**: 12-track playlist including:
   - Nirvana classics (Smells Like Teen Spirit, Something in the Way, etc.)
@@ -38,14 +38,14 @@ A modern web-based desktop environment inspired by the Batcomputer, built with N
 - **Audio Controls**: Play, pause, seek, volume control
 - **Focus Management**: Maintains playback when switching windows
 
-### 🔧 System Features
+### System Features
 - **Start Menu**: Application launcher with search functionality
 - **Taskbar**: Window management and system controls
 - **Context Menus**: Right-click desktop interactions
 - **Global Volume Control**: System-wide audio management
 - **Real-time APIs**: Live data from multiple sources
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Core
 - **Next.js 15.4.6**: React framework with App Router
@@ -65,7 +65,7 @@ A modern web-based desktop environment inspired by the Batcomputer, built with N
 - **NOAA**: Weather alerts
 - **YouTube IFrame API**: Music streaming
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js 18+ 
@@ -73,9 +73,6 @@ A modern web-based desktop environment inspired by the Batcomputer, built with N
 
 ### Installation
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/batos.git
-cd batos
 
 # Install dependencies
 npm install
@@ -84,13 +81,7 @@ npm install
 npm run dev
 ```
 
-### Build for Production
-```bash
-npm run build
-npm start
-```
-
-## 🎮 Usage
+## Usage
 
 ### Desktop Navigation
 - **Left-click Batman logo**: Open start menu
@@ -109,7 +100,7 @@ npm start
 - **Escape**: Close start menu
 - **Ctrl+Click**: Multi-select in file manager
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 batos/
@@ -130,7 +121,7 @@ batos/
 └── package.json
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Themes
 The system supports two themes:
@@ -148,9 +139,9 @@ The system supports two themes:
 2. Add to start menu applications array
 3. Implement required props and methods
 
-## 🤝 Contributing
+## Contributing
 
-We welcome contributions from the community! Please read our [Contribution Guidelines](CONTRIBUTING.md) before submitting any changes.
+Contributions from the community are welcome! Please read the [Contribution Guidelines](CONTRIBUTING.md) before submitting any changes.
 
 ### Before Submitting
 - **Preview Required**: Please include a screenshot or video preview of your changes
@@ -159,18 +150,18 @@ We welcome contributions from the community! Please read our [Contribution Guide
 - **Update Documentation**: Keep README and comments up to date
 
 ### Contribution Areas
-- 🎨 UI/UX improvements
-- 🚀 New applications
-- 📊 Additional widgets
-- 🔧 Bug fixes
-- 📚 Documentation updates
-- 🎵 Music playlist additions
+- UI/UX improvements
+- New applications
+- Additional widgets
+- Bug fixes
+- Documentation updates
+- Music playlist additions
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the AGPL License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **DC Comics**: For the Batman universe inspiration
 - **NASA**: For the EONET API
@@ -180,4 +171,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**BATOS** - Because even the Dark Knight needs a modern OS 🦇💻
+**BATOS** - Because even the Dark Knight needs a modern OS 
