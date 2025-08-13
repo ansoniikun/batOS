@@ -110,41 +110,74 @@ export function Taskbar({ items, onItemClick, onStartMenuClick, onSystemMenuTogg
   }
 
   return (
-    <div className={`fixed top-0 left-0 right-0 h-12 ${getThemeClass()} backdrop-blur-md border-b border-blue-400/30 z-50`}>
-      <div className="flex items-center justify-between h-full px-2">
+    <div className={`fixed top-0 left-0 right-0 h-14 ${getThemeClass()} backdrop-blur-md border-b-2 border-blue-400/50 z-50`} style={{
+      boxShadow: '0 2px 20px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(59, 130, 246, 0.1)'
+    }}>
+      <div className="flex items-center justify-between h-full px-4">
         {/* Batman Logo */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <div 
-            className="cursor-pointer transition-all duration-200 hover:scale-120"
+            className="cursor-pointer transition-all duration-300 hover:scale-110 group relative"
             onClick={onStartMenuClick}
           >
+            <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-md group-hover:bg-blue-400/40 transition-all duration-300"></div>
             <img 
               src="/batman-logo.png" 
               alt="Batman Logo" 
-              className="w-10 h-10 object-contain filter drop-shadow-lg drop-shadow-blue-400/80"
+              className="relative w-12 h-12 object-contain filter drop-shadow-lg drop-shadow-blue-400/80 group-hover:drop-shadow-blue-400 transition-all duration-300"
             />
+            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 group-hover:w-8 transition-all duration-300"></div>
           </div>
+          <div className="h-8 w-px bg-gradient-to-b from-blue-400/50 to-transparent"></div>
         </div>
 
         {/* Taskbar Items */}
-        <div className="flex items-center space-x-1 flex-1 justify-center">
+        <div className="flex items-center space-x-2 flex-1 justify-center">
           {items.map((item) => (
-                      <Button
-            key={item.id}
-            variant={item.isActive ? "batcomputer" : "ghost"}
-            size="sm"
-            onClick={() => onItemClick(item)}
-            className={cn(
-              "h-8 px-2 rounded-none min-w-0",
-              item.isMinimized && "opacity-50"
-            )}
-          >
-            <div className="w-4 h-4 mr-1">
-              {/* Icon placeholder - replace with actual icon */}
-              <div className="w-full h-full bg-blue-400 rounded-sm shadow-sm shadow-blue-400/50" />
+            <div
+              key={item.id}
+              onClick={() => onItemClick(item)}
+              className={cn(
+                "relative group cursor-pointer transition-all duration-300",
+                item.isMinimized && "opacity-50"
+              )}
+            >
+              {/* Background glow */}
+              <div className={cn(
+                "absolute inset-0 rounded-lg transition-all duration-300",
+                item.isActive 
+                  ? "bg-blue-400/20 shadow-lg shadow-blue-400/30" 
+                  : "bg-transparent group-hover:bg-blue-400/10"
+              )}></div>
+              
+              {/* Content */}
+              <div className="relative flex items-center space-x-2 px-3 py-2">
+                <div className="w-5 h-5 relative">
+                  {/* Icon glow */}
+                  <div className={cn(
+                    "absolute inset-0 rounded-sm transition-all duration-300",
+                    item.isActive 
+                      ? "bg-blue-400/30 blur-sm" 
+                      : "bg-transparent group-hover:bg-blue-400/20"
+                  )}></div>
+                  {/* Icon */}
+                  <div className="relative w-full h-full bg-blue-400 rounded-sm shadow-sm shadow-blue-400/50 flex items-center justify-center">
+                    <span className="text-xs font-bold text-black">A</span>
+                  </div>
+                </div>
+                <span className={cn(
+                  "text-xs font-medium transition-all duration-300",
+                  item.isActive ? "text-blue-400" : "text-blue-400/70 group-hover:text-blue-400"
+                )}>
+                  {item.title}
+                </span>
+              </div>
+              
+              {/* Active indicator */}
+              {item.isActive && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-blue-400 rounded-full"></div>
+              )}
             </div>
-            <span className="text-xs truncate">{item.title}</span>
-          </Button>
           ))}
         </div>
 
@@ -194,20 +227,29 @@ export function Taskbar({ items, onItemClick, onStartMenuClick, onSystemMenuTogg
         </div>
 
         {/* System Tray */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-4">
           {/* Settings */}
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-blue-400/10">
-            <Settings className="w-4 h-4 text-blue-400" />
-          </Button>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-blue-400/10 rounded-full blur-sm group-hover:bg-blue-400/20 transition-all duration-300"></div>
+            <Button variant="ghost" size="sm" className="relative h-9 w-9 p-0 hover:bg-blue-400/10 border border-blue-400/20">
+              <Settings className="w-4 h-4 text-blue-400" />
+            </Button>
+          </div>
 
           {/* System Icons */}
-          <div className="flex items-center space-x-3">
-            <Wifi className="w-4 h-4 text-blue-400" />
+          <div className="flex items-center space-x-4">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-blue-400/10 rounded-full blur-sm group-hover:bg-blue-400/20 transition-all duration-300"></div>
+              <div className="relative p-1.5 rounded-full border border-blue-400/20">
+                <Wifi className="w-4 h-4 text-blue-400" />
+              </div>
+            </div>
             
             <div className="relative" ref={volumeRef}>
+              <div className="absolute inset-0 bg-blue-400/10 rounded-full blur-sm group-hover:bg-blue-400/20 transition-all duration-300"></div>
               <button
                 onClick={() => setShowVolumeControl(!showVolumeControl)}
-                className="p-1.5 hover:bg-blue-400/10 rounded transition-colors"
+                className="relative p-1.5 hover:bg-blue-400/10 rounded-full border border-blue-400/20 transition-colors"
               >
                 {isMuted ? <VolumeX className="w-4 h-4 text-blue-400" /> : <Volume2 className="w-4 h-4 text-blue-400" />}
               </button>
@@ -240,27 +282,40 @@ export function Taskbar({ items, onItemClick, onStartMenuClick, onSystemMenuTogg
               )}
             </div>
             
-            <div className="flex items-center space-x-1">
-              <Battery className="w-4 h-4 text-blue-400" />
-              <span className="text-xs text-blue-400 font-mono">87%</span>
+            <div className="flex items-center space-x-2">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-blue-400/10 rounded-full blur-sm group-hover:bg-blue-400/20 transition-all duration-300"></div>
+                <div className="relative p-1.5 rounded-full border border-blue-400/20">
+                  <Battery className="w-4 h-4 text-blue-400" />
+                </div>
+              </div>
+              <span className="text-xs text-blue-400 font-mono font-bold">87%</span>
             </div>
           </div>
 
           {/* Time */}
-          <div className="flex flex-col items-end text-blue-400 text-xs px-3">
-            <div className="font-mono">{formatTime(currentTime)}</div>
-            <div className="text-blue-400/70">
-              {currentTime.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric' 
-              })}
+          <div className="flex flex-col items-end text-blue-400 text-xs px-4 py-1">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-blue-400/10 rounded-lg blur-sm group-hover:bg-blue-400/20 transition-all duration-300"></div>
+              <div className="relative px-3 py-1 rounded-lg border border-blue-400/20">
+                <div className="font-mono font-bold">{formatTime(currentTime)}</div>
+                <div className="text-blue-400/70 text-xs">
+                  {currentTime.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric' 
+                  })}
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Show Desktop */}
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-blue-400/10">
-            <ChevronDown className="w-4 h-4 text-blue-400" />
-          </Button>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-blue-400/10 rounded-full blur-sm group-hover:bg-blue-400/20 transition-all duration-300"></div>
+            <Button variant="ghost" size="sm" className="relative h-9 w-9 p-0 hover:bg-blue-400/10 border border-blue-400/20">
+              <ChevronDown className="w-4 h-4 text-blue-400" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -147,7 +147,7 @@ export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
   return (
     <div className="fixed inset-0" style={{ zIndex: 9999 }} onClick={onClose}>
       <div 
-        className={`absolute top-12 left-0 w-80 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-b-lg`}
+        className={`absolute top-14 left-0 w-80 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-b-lg`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Bar */}
