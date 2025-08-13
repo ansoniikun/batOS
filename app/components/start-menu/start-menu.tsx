@@ -25,6 +25,7 @@ import {
   Database,
   Shield
 } from 'lucide-react'
+import AlfredApp from '@/app/features/apps/alfred-app'
 
 interface StartMenuProps {
   isOpen: boolean
@@ -33,6 +34,16 @@ interface StartMenuProps {
 }
 
 const applications: DesktopApp[] = [
+  {
+    id: 'alfred',
+    name: 'Alfred',
+    icon: 'user',
+    description: 'AI Assistant & Voice Control',
+    category: 'system',
+    executable: () => <AlfredApp />,
+    defaultSize: { width: 300, height: 400 },
+    defaultPosition: { x: 300, y: 150 }
+  },
   {
     id: 'terminal',
     name: 'Terminal',
@@ -103,6 +114,7 @@ const getIconComponent = (iconName: string) => {
     'monitor': <Monitor className="w-6 h-6" />,
     'settings': <Settings className="w-6 h-6" />,
     'music': <Music className="w-6 h-6" />,
+    'user': <User className="w-6 h-6" />,
     'clock': <Clock className="w-6 h-6" />,
     'calendar': <Calendar className="w-6 h-6" />,
     'cpu': <Cpu className="w-6 h-6" />,
@@ -118,7 +130,7 @@ const getIconComponent = (iconName: string) => {
 export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
   const { getThemeClass } = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
-  const [activeTab, setActiveTab] = useState<'apps' | 'recent'>('apps')
+  const [activeTab, setActiveTab] = useState<'apps' | 'about'>('apps')
 
   const filteredApps = applications.filter(app =>
     app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -135,7 +147,7 @@ export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
   return (
     <div className="fixed inset-0" style={{ zIndex: 9999 }} onClick={onClose}>
       <div 
-        className={`absolute top-16 left-0 w-80 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-b-lg`}
+        className={`absolute top-12 left-0 w-80 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-b-lg`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Bar */}
@@ -167,15 +179,15 @@ export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
             Applications
           </button>
           <button
-            onClick={() => setActiveTab('recent')}
+            onClick={() => setActiveTab('about')}
             className={cn(
               "flex-1 py-3 text-sm font-medium transition-colors",
-              activeTab === 'recent' 
+              activeTab === 'about' 
                 ? "text-blue-400 border-b-2 border-blue-400" 
                 : "text-blue-400/70 hover:text-blue-400"
             )}
           >
-            Recent
+            About This System
           </button>
         </div>
 
@@ -240,10 +252,61 @@ export function StartMenu({ isOpen, onClose, onAppLaunch }: StartMenuProps) {
               )}
             </>
           ) : (
-            // Recent Tab
-            <div className="p-4 text-center text-blue-400/70">
-              <div className="text-sm">No recent applications</div>
-              <div className="text-xs mt-1">Applications you've used recently will appear here</div>
+            // About This System Tab
+            <div className="p-4">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <img 
+                    src="/batman-logo.png" 
+                    alt="Batman Logo" 
+                    className="w-12 h-12 object-contain filter drop-shadow-lg drop-shadow-blue-400/80"
+                  />
+                  <div>
+                    <div className="text-blue-400 font-bold text-lg">BatOS</div>
+                    <div className="text-blue-400/70 text-sm">Dark Knight Edition</div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">Version:</span>
+                    <span className="text-blue-400 font-mono">1.0.0</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">OS:</span>
+                    <span className="text-blue-400">BatOS</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">CPU:</span>
+                    <span className="text-blue-400">WayneTech Quantum Core</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">Memory:</span>
+                    <span className="text-blue-400">64GB RAM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">Storage:</span>
+                    <span className="text-blue-400">2TB SSD</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">Uptime:</span>
+                    <span className="text-blue-400">47 days, 12 hours</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400/70">Battery:</span>
+                    <span className="text-blue-400">87%</span>
+                  </div>
+                </div>
+                
+                <div className="pt-2 border-t border-blue-400/30">
+                  <div className="text-blue-400/70 text-xs">
+                    Built with Next.js and TypeScript
+                  </div>
+                  <div className="text-blue-400/70 text-xs mt-1">
+                    © 2025 Wayne Enterprises
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

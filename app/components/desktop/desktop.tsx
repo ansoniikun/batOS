@@ -10,7 +10,6 @@ import { NotificationCenter } from '@/app/components/notifications/notification-
 import { StartMenu } from '@/app/components/start-menu/start-menu'
 import { NotepadApp } from '@/app/features/apps/notepad-app'
 import { SystemInfoApp } from '@/app/features/apps/system-info-app'
-import { BatcomputerInterface } from '@/app/components/batcomputer/batcomputer-interface'
 import { TerminalApp } from '@/app/features/apps/terminal-app'
 import { FileManagerApp } from '@/app/features/apps/file-manager-app'
 import { IpodApp } from '@/app/features/apps/ipod-app'
@@ -500,19 +499,36 @@ export function Desktop({ className }: DesktopProps) {
   return (
     <div 
       className={cn(
-        "relative w-full h-screen overflow-hidden",
+        "relative w-full h-screen overflow-hidden bg-black",
         className
       )}
       onContextMenu={handleContextMenu}
       onClick={handleContextMenuClose}
     >
-      {/* Batcomputer Interface */}
-      <BatcomputerInterface 
-        currentTime={currentTime} 
-        onSystemMenuToggle={handleSystemMenuToggle}
-        onStartMenuClick={handleStartMenuToggle}
-      />
-      
+      {/* Grid Background Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="w-full h-full" style={{
+          backgroundImage: `
+            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }} />
+      </div>
+
+      {/* Circuit Pattern Overlay */}
+      <div className="absolute inset-0 opacity-10">
+        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="circuit" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M0 10 L20 10 M10 0 L10 20" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="0.5" fill="none"/>
+              <circle cx="10" cy="10" r="1" fill="rgba(59, 130, 246, 0.5)"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#circuit)"/>
+        </svg>
+      </div>
+
       {/* Desktop Content */}
       <div className="relative z-10 w-full h-full">
         {/* Widgets Layer */}
@@ -628,8 +644,8 @@ export function Desktop({ className }: DesktopProps) {
         {/* Context Menu */}
         {contextMenu.isOpen && (
           <div 
-            className={`fixed z-50 ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg py-2 min-w-48`}
-            style={{ left: contextMenu.x, top: contextMenu.y }}
+            className={`fixed ${getThemeClass()} backdrop-blur-md border border-blue-400/50 shadow-2xl rounded-lg py-2 min-w-48`}
+            style={{ left: contextMenu.x, top: contextMenu.y, zIndex: 9999 }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Themes Section */}
